@@ -29,6 +29,7 @@ namespace WEB_Asystent.Controllers
             // test here!
             if(data != null);
             var i = 0;
+            var j = 14;
             return Json(data);
         }
 
