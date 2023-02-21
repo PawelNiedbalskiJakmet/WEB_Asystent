@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WEB_Asystent</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WEB_Asystent.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/Ang/dist/angular.js"></script>
+    <script src="~/js/SvgAuto_controller.js" asp-append-version="true"></script>
+    <script src="~/js/konfigBud.js" asp-append-version="true"></script>
+
+
+
+</head>
+<body >
+    <header>
+       @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
+            <div class="panelGowny">
+                
+                           <div class="kontenerObrazka">
+                               <img src="logoJakmetBlue.png" height="70px">
+                  
+</div>
+<a  asp-area="" asp-controller="Home" asp-action="Index">
+               <div class="kafelekTytul">
+WEB_Asystent
+               </div>
+ </a>
+
+               <div class="kontenerUzytkownika">
+                   Imie i nazwisko 
+</div>
+      
+            </div>
+     @*   </nav>*@
+    </header>
+    <div>
+    <div class="pasekBoczny">@* kontenerek w ktorym jest pasek boczny*@
+         <div >         
+             <a   class="boczne_a" asp-area="" asp-controller="zamowienie" asp-action="Index">
+   <div class="kafelekLewy">
+                               <img src="ZamowieniePrzez.png" style="  width: 82.8px; margin: 1.6px">
+             </div>
+             </a>        
+             <a  class="boczne_a" asp-area="" asp-controller="konfigBudowa" asp-action="Index">
+             <div class="kafelekLewy" >
+        @*         Home*@
+                 <img src="ProjektPrzez.png" style="
+    width: 82.8px;
+    margin: 1.6px">
+             </div>
+             </a>     
+             <a  class="boczne_a" asp-area="" asp-controller="realizacja" asp-action="Index">
+                <div class="kafelekLewy">
+                    <img src="RealizacjaPrzez.png" style="  width: 82.8px; margin: 1.6px">
+                </div>
+             </a>
+             <a   class="boczne_a" asp-area="" asp-controller="ustawienia" asp-action="Index">
+   <div class="kafelekLewy">
+                               <img src="UstawieniePrzez.png" style="  width: 82.8px; margin: 1.6px">
+             </div>
+             </a>    
+       
+     
+ 
+        
+ 
+          
+       
+              
+                </div>
+    </div>
+
+    <div class="ekranGlowny">
+      @*  <main role="main" class="pb-3">*@
+            @RenderBody()
+       @* </main>*@
+
+    </div>
+    </div>
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - WEB_Asystent - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+  @*  @await RenderSectionAsync("Scripts", required: true)*@
+</body>
+</html>

@@ -1,0 +1,421 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+input[type=text], [type=datetime-local], [type=number], select {
+    padding: 5px 5px;
+    margin: 5px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-family: cursive;
+}
+
+body {
+    background-color: #a5e2ff;
+}
+
+input[type=submit], [type=button] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: cursive
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    /* padding: 14px 20px; */
+    margin: 8px 0;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: cursive;
+    font-size: 5px;
+}
+
+select:hover {
+    transform: translate(0px, -1px);
+    box-shadow: 0px 4px 56px 20px rgba(167, 227, 255, 1);
+    transition: all 0.5s linear;
+}
+
+input [type=submit]:hover, [type=button]:hover, [type=datetime-local]:hover, [type=number]:hover {
+    transform: translate(0px, -1px);
+    box-shadow: 0px 4px 20px 3px rgba(167, 227, 255, 1);
+    transition: all 0.5s linear;
+}
+
+input [type=checkbox]:hover {
+    box-shadow: 0px 0px 30px 15px rgba(255, 255, 255, 0.63);
+}
+
+button:hover {
+    transform: translate(0px, -1px);
+    box-shadow: 0px 4px 20px 3px rgba(167, 227, 255, 1);
+    transition: all 0.5s linear;
+}
+
+
+.wid {
+    box-shadow: 1px 1px 32px -10px rgb(255 255 255);
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: cursive;
+    width: calc(100% - 50px);
+}
+
+.title {
+    border-radius: 5px;
+    background-color: #2ca4bf;
+    padding: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+    font-family: cursive;
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    box-shadow: inset 0px 0px 15px 5px rgb(0 0 0 / 20%);
+}
+
+.titleWykres {
+    font-size: 25px;
+    text-align: left;
+    margin-bottom: 10px;
+    padding-left: 10%;
+    text-shadow: -6px 4px 6px rgba(0, 93, 235, 0.32);
+    color: rgb(0 114 255 / 45%);
+    transition: all 0.5s linear;
+}
+
+    .titleWykres:hover {
+        /*transform:  rotate(-2deg) translate(40px, 0px);
+transition: all 0.5s linear;*/
+    }
+
+.element {
+    border: solid;
+    padding: 10px;
+    margin: 10px;
+    border-color: #0081bf80;
+    border-radius: 20px;
+}
+
+.combobox {
+    border-radius: 20px;
+    background-color: rgb(0 174 255 / 14%);
+    margin-right: 10%;
+    margin-left: 20px;
+    padding: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.fragment {
+    margin-left: 2%;
+    padding: 5px;
+}
+/*.prasa{
+  
+   fill: rgba(145, 145, 0,0.10);
+    
+}
+.prasa:hover{
+
+   fill: rgba(145, 145, 145,0.80);
+    
+}
+*/
+.tooltip {
+    visibility: false;
+    width: 100px;
+    height: 85px;
+    stroke: rgb(0 0 0 / 0%);
+    stroke-width: 0.5;
+    fill: rgb(6 0 167 / 50%);
+    color: rgb(255 255 255 / 100%);
+}
+
+.tekstPrasy {
+    fill: rgb(0, 0, 0);
+    font-family: TechnicBold;
+    font-size: 9.0px;
+    white-space: pre;
+}
+
+.container {
+    position: relative;
+}
+
+.box {
+}
+
+.overlay {
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    background: #00000059;
+    position: absolute;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0px 0px 15px 16px rgb(0 0 0 / 59%);
+}
+
+.overlayTrend {
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    background: #00000059;
+    position: absolute;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 0px 0px 15px 16px rgb(0 0 0 / 59%);
+}
+/* Add a right margin to each icon */
+.fa {
+    margin-left: -12px;
+    margin-right: 8px;
+}
+
+.w_lini {
+    display: inline-block;
+    color: white;
+    width: 50px;
+    /* height: 20px; */
+    padding: 1px;
+    font-size: 4px;
+}
+
+    .w_lini:hover {
+        transform: translate(0px, 0px);
+        box-shadow: 0px 0px 0px 0px rgba(167, 227, 255, 1);
+        transition: all 0.5s linear;
+    }
+
+.linia_form {
+    width: 100%;
+    height: 20px;
+ /*   margin: 2px;*/
+}
+
+.kontener {
+    width: 100%;
+   height: 100%; 
+    padding: 5px;
+    /* margin: 5px; */
+    /* border-radius: 2%; */
+    border-color: #5c5c5c63;
+    background-color: #278ca1;
+    /* border-style: solid; */
+    border-width: 1px;
+}
+
+.kontener_form {
+    width: 120px;
+    height: 90px;
+}
+.pasekBoczny {
+    position: fixed;
+    left: 0px;
+    top: 70px;
+    width: 130px;
+    height:100%;
+    padding: 2px;
+    font-size: 5px;
+    background-color: #2ca4bf;
+    padding: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    box-shadow: 15px 0px 13px 0px rgb(0 0 0 / 20%);
+}
+.pasekPaneluKontrolnego {
+    position: fixed;
+    left: 0px;
+    bottom: -20px;
+    width: 130px;
+    /* height: 700px; */
+    /* padding: 2px; */
+    font-size: 5px;
+    background-color: #278ca1;
+    border-radius: 20px;
+    height: 250px;
+    padding: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+}
+.ekranGlowny {
+    width: calc(100% - 100px);
+    padding: 2px;
+    margin-left: 130px;
+    margin-top: 70px;
+    font-size: 5px;
+}
+.panelGowny {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: calc(100% - 10px);
+    height: 70px;
+    border-radius: 2px; 
+    background-color: #117c91d9;
+    padding: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-family: cursive;
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    box-shadow: 0px 10px 11px 0px rgb(0 0 0 / 20%);
+}
+.kafelekLewy {
+    border: 2px;
+    border-color: #ffffffa1;
+    border-style: dashed;
+    background-color: #caf1ff00;
+    border-radius: 10px;
+/*    height: 70px;
+    padding: 10px;*/
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px -15px 12px 0px #08222a59;
+}
+.kafelekLewy:hover {
+    transform: translate(0px, -1px);
+    box-shadow: 0px 4px 20px 3px rgba(167, 227, 255, 1);
+    transition: all 0.1s linear;
+}
+.kafelekTytul {
+    position: fixed;
+    left: calc(50% - 100px);
+    width: 200px;
+    /* border: 1px; */
+    border: 2px;
+    /* border-color: #ffffffa1; */
+    /* background-color: #caf1ff00; */
+    border-radius: 10px;
+    border-style: solid;
+    /* height: 70px; */
+    /* padding: 10px; */
+    margin-top: 10px;
+    /* margin-bottom: 10px; */
+    box-shadow: 0px 9px 9px 8px #294c56a6;
+    font-family: 'Comic Sans MS';
+    font-size: 20px;
+    text-decoration: unset;
+    color: white;
+}
+    .kafelekTytul:hover {
+        transform: translate(0px, 5px);
+        box-shadow: 0px 4px 20px 3px rgba(167, 227, 255, 1);
+        transition: all 0.2s linear;
+    }
+/*a {
+    color: white;
+    font-family: 'Comic Sans MS';
+    color: white;
+    font-size: 20px;
+    text-decoration: unset;
+}*/
+.boczne_a {
+    color: white;
+    font-family: 'Comic Sans MS';
+    font-size: 15px;
+    text-decoration: unset;
+}
+    .boczne_a:hover {
+        color: white;
+    }
+.tytylStrony {
+    font-size: 30px;
+    font-family: cursive;
+    color: white;
+    margin-top: 20px;
+}
+.obrocony {
+    -webkit-transform: rotate(-90deg);
+}
+.zakladka {
+    width: 140px;
+    height: 25px;
+    background-color: #57acd926;
+    border-style: dashed;
+    border-color: #3e3e3e47;
+    border-width: 1px;
+    display: inline-block;
+    font-family: cursive;
+    font-size: 14px;
+    margin-left: 2px;
+    color: #000000b0;
+    text-align: center;
+    padding: 2px;
+}
+.kontenerUzytkownika {
+    position: fixed;
+    right: 5px;
+    top: 0px;
+    width: 200px;
+    /* border: 1px; */
+    border: 2px;
+
+    /* box-shadow: 0px 9px 9px 8px #294c56a6; */
+    font-family: 'Comic Sans MS';
+    font-size: 15px;
+    text-decoration: unset;
+    color: white;
+}
+.kontenerObrazka {
+    position: fixed;
+    left: 5px;
+    top: 0px;
+
+    /* border: 1px; */
+    border: 2px;
+    /* box-shadow: 0px 9px 9px 8px #294c56a6; */
+    font-family: 'Comic Sans MS';
+    font-size: 15px;
+    text-decoration: unset;
+    color: white;
+}
+.kafelek {
+    position: fixed;
+    left: 5px;
+    top: 0px;
+    /* border: 1px; */
+    border: 2px;
+    /* box-shadow: 0px 9px 9px 8px #294c56a6; */
+    font-family: 'Comic Sans MS';
+    font-size: 15px;
+    text-decoration: unset;
+    color: white;
+}
+.konteneryRozmiarow {
+    width: 50px;
+    height: 20px;
+    font-family: 'Comic Sans MS';
+    font-size: 5px;
+    color: blue;
+}
+
