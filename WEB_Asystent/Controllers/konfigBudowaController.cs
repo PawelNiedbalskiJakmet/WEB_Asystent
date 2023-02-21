@@ -31,6 +31,7 @@ namespace WEB_Asystent.Controllers
             var i = 0;
             var j = 14;
             var k = 15;
+            var m = 0;
             return Json(data);
         }
 
