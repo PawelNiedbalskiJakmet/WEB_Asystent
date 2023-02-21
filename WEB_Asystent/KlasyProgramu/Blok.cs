@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 
 
@@ -6,25 +7,25 @@ namespace WEB_Asystent.KlasyProgramu
 {
     public class Blok
     {
-        private static int cnt;
-        private static List<Blok> listaTymczasowa = new List<Blok>();
+        private static int cnt=0;
+     //   private static List<Blok> listaTymczasowa = new List<Blok>();
         private double x;
         private double y;
-        public static List<Blok> OdczytajPotomneBloki(Blok _blok)
-        {
-            Blok.listaTymczasowa = new List<Blok>();
+        //public static List<Blok> OdczytajPotomneBloki(Blok _blok)
+        //{
+        //    Blok.listaTymczasowa = new List<Blok>();
 
-            _blok.odnajdzBlokiPotomne();
+        //    _blok.odnajdzBlokiPotomne();
 
-            return listaTymczasowa;
-        }
+        //    return listaTymczasowa;
+       // }
         // dunamiczne elementy
         double szerokosc;
         double wysokosc;
         List<Blok> bloklist = new List<Blok>();
         Blok parent;
         string ustawienie = "";
-        int ID = 1;
+        private int id = 0;
 
         public Blok(Blok _parent,double _szerokosc, double _wysokosc, int _nrWKolei)
         {
@@ -32,17 +33,17 @@ namespace WEB_Asystent.KlasyProgramu
             wysokosc = _wysokosc;
             parent = _parent;
             cnt++;
-            ID = cnt;
-            if (_parent.ZwrocUstawienie() == "POZ")
+            id = cnt;
+            if (_parent.Ustawienie == "POZ")
             {
-                x = szerokosc * _nrWKolei + _parent.ZwrocX();
-                y = _parent.ZwrocY();
+                x = szerokosc * _nrWKolei + _parent.X;
+                y = _parent.Y;
             }
             else;
-            if (_parent.ZwrocUstawienie() == "PION")
+            if (_parent.Ustawienie == "PION")
             {
-                x=_parent.ZwrocX();
-                y = wysokosc * _nrWKolei + _parent.ZwrocY();
+                x=_parent.X;
+                y = wysokosc * _nrWKolei + _parent.Y;
             }
             else;
 
@@ -54,14 +55,16 @@ namespace WEB_Asystent.KlasyProgramu
             szerokosc = _szerokosc;
             wysokosc = _wysokosc;
             cnt++;
-            ID = cnt;
+            id = cnt;
         }
         public Blok()
         {
             x = 0;
             y = 0;
             cnt++;
-            ID = cnt;
+            szerokosc = 100;
+            wysokosc = 100;
+            id = cnt;
         }
         public void ZmienSzerokosc(double wartoscSzerokosci)
         {
@@ -76,7 +79,7 @@ namespace WEB_Asystent.KlasyProgramu
 
         public Blok NajszerszaGrupaZbierajacaPionowe()
         {
-            var ob= new Blok();
+            var ob = this;
             if(parent.ustawienie=="PION")
             {
                 ob=parent.NajszerszaGrupaZbierajacaPionowe();
@@ -87,14 +90,20 @@ namespace WEB_Asystent.KlasyProgramu
             }
             return ob;
         }
-        public List<Blok> ZrobListeDown(List<Blok> _input)
+        private List<Blok> zrobListeDown(List<Blok> _input)
         {
             _input.Add(this);
             foreach (Blok obc in bloklist)
             {
-                obc.ZrobListeDown(_input);
+                obc.zrobListeDown(_input);
             }
        return _input;
+        }
+        public List<Blok> ZrobListeDown()
+        {
+           var zmienna= new List<Blok>();
+            this.zrobListeDown(zmienna);
+            return zmienna ;
         }
         public void ZmienSzerokoscDown(double wartoscSzerokosci)
         {
@@ -146,28 +155,18 @@ namespace WEB_Asystent.KlasyProgramu
 
 
         }
-        private void odnajdzBlokiPotomne()
-        {
-            //  var zmienna= new List<Blok>();
-            foreach (Blok blok in bloklist)
-            {
-                Blok.listaTymczasowa.Add(blok);
-                blok.odnajdzBlokiPotomne();
-            }
+        //private void odnajdzBlokiPotomne()
+        //{
+        //    //  var zmienna= new List<Blok>();
+        //    foreach (Blok blok in bloklist)
+        //    {
+        //        Blok.listaTymczasowa.Add(blok);
+        //        blok.odnajdzBlokiPotomne();
+        //    }
 
 
-        }
-        public void DodajCharakter(string _ulozenie)
-        {
-            if (_ulozenie == "PION")
-            {
-                ustawienie = "PION";
-            }
-            if (_ulozenie == "POZ")
-            {
-                ustawienie = "POZ";
-            }
-        }
+        //}
+
 
         public void dodajBloki(int _liczba, string _ulozenie)
         {
@@ -205,26 +204,69 @@ namespace WEB_Asystent.KlasyProgramu
 
             }
         }
-        public double ZwrocX()
+    
+        public double X
         {
-            return x;
+
+            get
+            {
+                return x;
+            }
+            set
+            {
+                x = value;
+            }
+
         }
-        public double ZwrocY()
+        public double Y
         {
-            return y;
+
+            get
+            {
+                return y;
+            }
+            set
+            {
+                y= value;
+            }
+
         }
-        public int getID()
+    
+    
+        public double Wysokosc
         {
-            return ID;
+            get
+            {
+                return wysokosc;
+            }
+            set
+            {
+                wysokosc = value;
+            }
+            
         }
+        public double Szerokosc
+        {
+            get
+            {
+                return szerokosc;
+            }
+            set
+            {
+                szerokosc = value;
+            }
+
+        }
+     
         public Blok Przeszukaj(int _ID)
         {
-            Blok zmienna = new Blok();
+            Blok zmienna = this;
+          //  Blok.cnt--;
             if (bloklist != null)
             {
                 foreach (Blok _blok in bloklist)
                 {
-                    if (_blok.getID() == _ID)
+                    if (_blok.ID == _ID)
                     {
                         zmienna = _blok;
                         break;
@@ -240,37 +282,68 @@ namespace WEB_Asystent.KlasyProgramu
 
         }
 
-        public Blok PrzeczytajWszystko()
+        //public Blok PrzeczytajWszystko()
+        //{
+        //    Blok zmienna = this;
+        //    //Blok.cnt--;
+        //    Console.WriteLine(this.ToString());
+        //    if (bloklist != null)
+        //    {
+        //        foreach (Blok _blok in bloklist)
+        //        {
+        //            // richTextBox1.AppendText(_blok.ToString()+" ");
+
+        //            _blok.PrzeczytajWszystko();
+        //        }
+        //    }
+        //    return zmienna;
+
+        //}
+  
+        public List<Blok> BlokiWewnetrzne
         {
-            Blok zmienna = new Blok();
-            Console.WriteLine(this.ToString());
-            if (bloklist != null)
+
+            get
             {
-                foreach (Blok _blok in bloklist)
-                {
-                    // richTextBox1.AppendText(_blok.ToString()+" ");
-
-                    _blok.PrzeczytajWszystko();
-                }
+                return bloklist;
             }
-            return zmienna;
+            set
+            {
+                bloklist = value;
+            }
 
         }
-        public List<Blok> GetBloki()
+        public string Ustawienie
         {
-            return bloklist;
-        }
-        public string ZwrocUstawienie()
-        {
-            return ustawienie;
+
+            get
+            {
+                return ustawienie;
+            }
+            set
+            {
+                ustawienie = value;
+            }
+
         }
         public override string ToString()
         {
-            return ID+" "+ustawienie+" "+ szerokosc+" "+wysokosc;
+            return id+" "+ustawienie+" "+ szerokosc+" "+wysokosc;
         }
 
-
-
+        public int ID
+        {
+         
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+            }
+        
+        }
     }
 
 

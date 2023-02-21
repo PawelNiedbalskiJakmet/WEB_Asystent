@@ -2,6 +2,7 @@
 {
     internal interface IPoprzeczka
     {
+
         double ZwrocDlugosc();
         double ZwrocSzerokosc();
         PoprzeczkaStrona ZwrocLewy();

@@ -7,6 +7,7 @@ namespace WEB_Asystent.Controllers
     public class konfigBudowaController : Controller
     {
         // GET: konfigBudowaController
+      static  Blok Podstawa=new Blok();
         public ActionResult Index()
         {
             return View();
@@ -27,11 +28,15 @@ namespace WEB_Asystent.Controllers
         public JsonResult PostDodajBloki(KonfigBudowa data)
         {
             // test here!
-            if(data != null);
-            var i = 0;
-            var j = 14;
-            var k = 15;
-            var m = 0;
+            if(data != null)
+            {
+                var wyszukany=Podstawa.Przeszukaj(data.ID);
+                wyszukany.dodajBloki(data.cnt, data.orientacja);
+              
+                 var obiektowa=   wyszukany.ZrobListeDown();
+
+            }
+           
             return Json(data);
         }
 
