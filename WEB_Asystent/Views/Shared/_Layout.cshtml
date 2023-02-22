@@ -10,13 +10,18 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/Ang/dist/angular.js"></script>
-    <script src="~/js/SvgAuto_controller.js" asp-append-version="true"></script>
+    <script src="~/lib/Ang/dist/angular-cookies.js"></script>
+    <script src="~/js/Main_controller.js" asp-append-version="true"></script>
     <script src="~/js/konfigBud.js" asp-append-version="true"></script>
+    <script src="~/js/konfigRozmiar.js" asp-append-version="true"></script>
+    <script src="~/js/konfigModuly.js" asp-append-version="true"></script>
+    <script src="~/js/Panele.js" asp-append-version="true"></script>
+    <script src="~/js/shared.js" asp-append-version="true"></script>
 
 
 
 </head>
-<body >
+<body ng-app="app">
     <header>
        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">*@
             <div class="panelGowny">
@@ -31,37 +36,45 @@ WEB_Asystent
                </div>
  </a>
 
-               <div class="kontenerUzytkownika">
-                   Imie i nazwisko 
-</div>
+            <div class="kontenerUzytkownika" ng-controller="CtrlUser"  >
+               @*    Imie i nazwisko*@
+               @* {{user.imie+ "  "+user.nazwisko}}*@
+             @*   <select name="repeatSelect" id="repeatSelect" ng-model="user" ng-init="user = users[0]">
+                    <option ng-repeat="x in users" value="{{x.id}}">{{x.imie +" "+x.nazwisko}}</option>
+                </select>*@
+                <select ng-change="zmieniono($event)" ng-init="user = users[0]"
+                        ng-model="user"
+                        ng-options="x.imie+ ' '+ x.nazwisko for x in users">
+                </select>
       
             </div>
      @*   </nav>*@
     </header>
     <div>
-    <div class="pasekBoczny">@* kontenerek w ktorym jest pasek boczny*@
-         <div >         
+        <div ng-controller="CtrlPanelBoczny" class="pasekBoczny">
+            @* kontenerek w ktorym jest pasek boczny*@
+         <div  >         
              <a   class="boczne_a" asp-area="" asp-controller="zamowienie" asp-action="Index">
-   <div class="kafelekLewy">
-                               <img src="ZamowieniePrzez.png" style="  width: 82.8px; margin: 1.6px">
+                    <div style="{{lista[0]}}" class="kafelekLewy">
+                        <img src="ZamowieniePrzez.png" style="  width: 82.8px; margin: 1.6px;{{listaDis[0]}}">
              </div>
              </a>        
              <a  class="boczne_a" asp-area="" asp-controller="konfigBudowa" asp-action="Index">
-             <div class="kafelekLewy" >
+                    <div style="{{lista[1]}}" class="kafelekLewy">
         @*         Home*@
                  <img src="ProjektPrzez.png" style="
     width: 82.8px;
-    margin: 1.6px">
+    margin: 1.6px; {{listaDis[1]}}">
              </div>
              </a>     
              <a  class="boczne_a" asp-area="" asp-controller="realizacja" asp-action="Index">
-                <div class="kafelekLewy">
-                    <img src="RealizacjaPrzez.png" style="  width: 82.8px; margin: 1.6px">
+                    <div style="{{lista[2]}}" class="kafelekLewy">
+                        <img src="RealizacjaPrzez.png" style="  width: 82.8px; margin: 1.6px; {{listaDis[2]}}">
                 </div>
              </a>
              <a   class="boczne_a" asp-area="" asp-controller="ustawienia" asp-action="Index">
-   <div class="kafelekLewy">
-                               <img src="UstawieniePrzez.png" style="  width: 82.8px; margin: 1.6px">
+                    <div class="kafelekLewy" style="{{lista[3]}}">
+                        <img src="UstawieniePrzez.png" style="  width: 82.8px; margin: 1.6px;{{listaDis[3]}}">
              </div>
              </a>    
        
@@ -84,11 +97,11 @@ WEB_Asystent
     </div>
 
 
-    <footer class="border-top footer text-muted">
+@*    <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - WEB_Asystent - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>*@
 
   @*  @await RenderSectionAsync("Scripts", required: true)*@
 </body>

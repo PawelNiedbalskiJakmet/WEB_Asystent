@@ -1,6 +1,4 @@
-﻿using WEB_Asystent.KlasyProgramu;
-
-namespace WEB_Asystent.Global
+﻿namespace WEB_Asystent.Global
 {
     public static class globalne
     {
@@ -13,11 +11,22 @@ namespace WEB_Asystent.Global
             _user.Nazwisko = "Niedbalski";
             _user.UserID = 1;
 
-            _user.DodajZakladke("wom");
-            _user.DodajZakladke("pom");
+            _user.DodajZakladke("wom-numer");
+            _user.DodajZakladke("pom-numer");
 
-          //  _user.Blok = new Blok(_user);
+            //  _user.Blok = new Blok(_user);
             Uzytkownicy.Add(_user);
+
+            var _user2 = new User();
+            _user2.Imie = "Pawel2";
+            _user2.Nazwisko = "Niedbalski2";
+            _user2.UserID = 2;
+
+            _user2.DodajZakladke("wom-numer2");
+            _user2.DodajZakladke("pom-numer2");
+
+            //  _user.Blok = new Blok(_user);
+            Uzytkownicy.Add(_user2);
         }
 
     }

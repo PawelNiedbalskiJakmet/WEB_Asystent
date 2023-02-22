@@ -28,16 +28,16 @@
 <svg  id="idBoxSvg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" ng-mouseleave="funcLeaveRect($event)" style="border-style: solid;border-width: 1px;border-color: #0000002e;">
    @* <rect stroke="#000000" stroke-dashoffset="" fill-rule="nonzero" id="svg_1" x="0" y="0" width="500" height="500" style="color: rgb(0, 0, 0); stroke-width: 1px; fill: rgba(255, 255, 255, 0);" class="selected" fill-opacity="1" stroke-opacity="1"/>*@  
 
- <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%"  />
-  <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%"  /> 
-   <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" /> 
+<line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%"  />
+<line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%"  /> 
+<line stroke="blue" stroke-width="0.5" ng-attr-x1="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" /> 
 
-     <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
-    <line stroke="blue" stroke-width="0.5" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" ng-attr-x1="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
+<line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
+<line stroke="blue" stroke-width="0.5" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" ng-attr-x1="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
 
 
 
-     <rect   fill="{{x._bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x._x+svgConfig.margines*100}}%"  ng-attr-y="{{x._y+svgConfig.margines*100}}%" ng-attr-width="{{x._width*svgConfig.obszar}}%" ng-attr-height="{{x._height*svgConfig.obszar}}%"/>
+<rect   fill="{{x._bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x._x+svgConfig.margines*100}}%"  ng-attr-y="{{x._y+svgConfig.margines*100}}%" ng-attr-width="{{x._width*svgConfig.obszar}}%" ng-attr-height="{{x._height*svgConfig.obszar}}%"/>
   
      
 
@@ -86,7 +86,7 @@
      </div>
      <div class="linia_form">
        <label class="w_lini">Liczba blokow:</label>
-       <input style="color: black;" type="number" class="w_lini" value="0" ng-model="FormBlok.N">
+                                <input style="color: black;" type="number" class="w_lini" value="0" min="2" ng-model="FormBlok.N">
      </div>
     <div class="linia_form">
        <label class="w_lini">Orientacja</label>

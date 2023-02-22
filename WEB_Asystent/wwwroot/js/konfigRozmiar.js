@@ -1,8 +1,8 @@
-﻿function SvgFunct(scop, Wspolne) {
+﻿function Svg2Funct(scop, Wspolne) {
 
   
     scop.user = {
-        imie: Wspolne.getUser().imie, nazwisko: Wspolne.getUser().nazwisko, id: Wspolne.getUser().id, formblok: { n: 2, orientacja: "PION" }, datablokukliknietego: { x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }, zakladkiselected: { nazwa: "wom", id: 1, color: "white", calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, bloki: [{ x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }] }, zakladki: [{ nazwa: "wom", id: 1, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ x: 0, y: 0, width: 100, height: 100, bg_color: "white", id: 1 }] }, { nazwa: "pom", id: 2, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }] }]  };
+        imie: Wspolne.getUser().imie, nazwisko: Wspolne.getUser().nazwisko, id: Wspolne.getUser().id, formblok: { wysokosc: 2, szerokosc: 2 }, datablokukliknietego: { x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }, zakladkiselected: { nazwa: "wom", id: 1, color: "white", calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, bloki: [{ x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }] }, zakladki: [{ nazwa: "wom", id: 1, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ x: 0, y: 0, width: 100, height: 100, bg_color: "white", id: 1 }] }, { nazwa: "pom", id: 2, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }] }]  };
 
 
 
@@ -26,7 +26,7 @@
 
         var dataOut = { imie: Wspolne.getUser().imie, nazwisko: Wspolne.getUser().nazwisko, id: Wspolne.getUser().id }
         if (dataOut.id > 0) {
-            $.post("konfigBudowa/PostUpdateUser", dataOut, function (data) {
+            $.post("konfigRozmiar/PostUpdateUser", dataOut, function (data) {
                 scop.user = data;
                 scop.user.zakladki[0].color = "#ffffff";
                 scop.user.zakladkiselected = scop.user.zakladki[0];
@@ -66,7 +66,7 @@
         var dataOut = scop.user;
 
 
-        $.post("konfigBudowa/PostZmieniaZakladke", dataOut, function (data) {
+        $.post("konfigRozmiar/PostZmieniaZakladke", dataOut, function (data) {
             scop.user.zakladkiselected.bloki = data;
 
             scop.$apply();
@@ -129,7 +129,7 @@
      //   scop.updateUser();
     //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
         var dataOut = scop.user;
-        $.post("konfigBudowa/PostDodajBloki", dataOut, function (data) {
+        $.post("konfigRozmiar/PostDodajBloki", dataOut, function (data) {
             scop.user.zakladkiselected.bloki = data;
             if (scop.Pokazane == true) {
                 $("#okno").hide();

@@ -13,19 +13,13 @@
         <Position X="0.255" Y="0.13" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="parent" Type="WEB_Asystent.KlasyProgramu.Blok" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="3.225" Y="8.429" />
-        <Point X="3.225" Y="8.679" />
-        <Point X="4.375" Y="8.679" />
-        <Point X="4.375" Y="8.429" />
-      </Path>
+    <AssociationLine Name="parent" Type="WEB_Asystent.KlasyProgramu.Blok">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.259" Y="0.472" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>ECAIAEAAEABAgABEABAAFA4AABAAQAAAAEBgABAA4wA=</HashCode>
+      <HashCode>ECAIAEAAEAAAgABEABAAFA4AABAAQAAAAEBgABAA8wA=</HashCode>
       <FileName>KlasyProgramu\Blok.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -36,14 +30,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="WEB_Asystent.KlasyProgramu.BlokHoryzontalny" Collapsed="true">
-    <Position X="4.25" Y="0.5" Width="1.5" />
+    <Position X="1.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>KlasyProgramu\BlokHoryzontalny.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="WEB_Asystent.KlasyProgramu.BlokWertykalny" Collapsed="true">
-    <Position X="6.5" Y="0.5" Width="1.5" />
+    <Position X="4.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>KlasyProgramu\BlokWertykalny.cs</FileName>
@@ -74,15 +68,16 @@
   <Class Name="WEB_Asystent.Controllers.konfigBudowaController">
     <Position X="12.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABAAAABAAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
+      <HashCode>AAgAAAAAAAABAAAABAAAAAAAAAEAAEACAAEAAAAAAAA=</HashCode>
       <FileName>Controllers\konfigBudowaController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="WEB_Asystent.Models.KonfigBudowa">
+  <Class Name="WEB_Asystent.Models.BlokModel">
     <Position X="8.25" Y="3" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgABAAAgAAAAAAAAEgAAAAAgAAAAAAAAAAAYAA=</HashCode>
-      <FileName>Models\KonfigBudowa.cs</FileName>
+      <HashCode>AAAAAAAIAASAAAAAAQAAAAAAABAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\BlokModel.cs</FileName>
+      <NewMemberFileName>Models\KonfigBudowa.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="WEB_Asystent.KlasyProgramu.IPoprzeczka">

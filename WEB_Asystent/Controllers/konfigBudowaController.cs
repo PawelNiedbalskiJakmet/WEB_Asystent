@@ -10,7 +10,9 @@ namespace WEB_Asystent.Controllers
         //   static  Blok Podstawa=new Blok();
         public ActionResult Index()
         {
-            return View();
+            var obiekt = new UserModel(globalne.Uzytkownicy[0]);
+
+            return View(obiekt);
         }
 
         // GET: konfigBudowaController/Details/5
@@ -25,141 +27,88 @@ namespace WEB_Asystent.Controllers
             return View();
         }     
         [HttpPost]
-        public JsonResult PostZmieniaZakladke(ZakladkaModel data)
+        public JsonResult PostUpdateUser(UserModel data) // odczytanie danych dla danego Usera
         {
-            var listaModeli = new List<KonfigBudowa>();
+            UserModel doReturn;//
+            if (data != null)
+            {
+
+                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.id);
+                doReturn = new UserModel(podstawa);
+
+
+
+            }
+            else
+            {
+                doReturn = new UserModel();
+            }
+            return Json(doReturn);
+
+        }
+        [HttpPost]
+        public JsonResult PostZmieniaZakladke(UserModel data) // przerzuca zakladke
+        {
+            var listaModeli = new List<BlokModel>();
             // test here!
             if (data != null)
             {
                 //data.UserID= data.UserID;
-                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.UserID).ListyZakladek.Find(y => y.ZakladkaID == data.ID).Blok;
+                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.id).ListyZakladek.Find(y => y.ZakladkaID == data.zakladkiselected.id).Blok;
 
-               // var wyszukany = podstawa.Przeszukaj(data.ID);
-               // wyszukany.dodajBloki(data.cnt, data.orientacja);
+                // var wyszukany = podstawa.Przeszukaj(data.ID);
+                // wyszukany.dodajBloki(data.cnt, data.orientacja);
 
                 var obiektowa = podstawa.ZrobListeDown();
 
 
                 foreach (var obiekt in obiektowa)
                 {
-                    var modelObiekt = new KonfigBudowa(obiekt);
+                    var modelObiekt = new BlokModel(obiekt);
                     listaModeli.Add(modelObiekt);
                 }
 
-                //  JsonConvert.SerializeObject(products, Formatting.Indented);
+
             }
 
-            // scop.bloki = [{ _x: 0, _y: 0, _width: 100, _height: 100, _bg_color: "white", ID: 1 }];
-            //var q = Json(listaModeli, JsonRequestBehavior.AllowGet
-            var doReturn = listaModeli.Select(model => new
-            {
-                _x = model.X,
-                _y = model.Y,
-                _width = model.Width,
-                _height = model.Height,
-                _bg_color = "white",
-                ID = model.ID
-            }); ;
-           // var q = Json(doReturn);
+
+            var doReturn = (IEnumerable<BlokModel>)listaModeli;
+
 
             return Json(doReturn);
         }
         [HttpPost]
-        public JsonResult PostDodajBloki(KonfigBudowa data)
+        public JsonResult PostDodajBloki(UserModel data) // dodanie nowego bloku do zakladki do uzytkownika
         {
-            var listaModeli = new List<KonfigBudowa>();
+            var listaModeli = new List<BlokModel>();
             // test here!
             if (data != null)
             {
                 //data.UserID= data.UserID;
-                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.UserID).ListyZakladek.Find(y => y.ZakladkaID == data.ZakladkaID).Blok;
-  
-                var wyszukany = podstawa.Przeszukaj(data.ID);
-                wyszukany.dodajBloki(data.cnt, data.orientacja);
+                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.id).ListyZakladek.Find(y => y.ZakladkaID == data.zakladkiselected.id).Blok;
+
+                var wyszukany = podstawa.Przeszukaj(data.datablokukliknietego.id);
+                wyszukany.dodajBloki(data.formblok.n, data.formblok.orientacja);
 
                 var obiektowa = podstawa.ZrobListeDown();
 
 
                 foreach (var obiekt in obiektowa)
                 {
-                    var modelObiekt = new KonfigBudowa(obiekt);
+                    var modelObiekt = new BlokModel(obiekt);
                     listaModeli.Add(modelObiekt);
                 }
 
                 //  JsonConvert.SerializeObject(products, Formatting.Indented);
             }
 
-            // scop.bloki = [{ _x: 0, _y: 0, _width: 100, _height: 100, _bg_color: "white", ID: 1 }];
-            //var q = Json(listaModeli, JsonRequestBehavior.AllowGet
-            var doReturn = listaModeli.Select(model => new
-            {
-                _x = model.X,
-                _y = model.Y,
-                _width = model.Width,
-                _height = model.Height,
-                _bg_color = "white",
-                ID = model.ID
-            }); ;
-            var q = Json(doReturn);
+
+
+            var doReturn = (IEnumerable<BlokModel>)listaModeli;
 
             return Json(doReturn);
         }
- 
-        // POST: konfigBudowaController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: konfigBudowaController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: konfigBudowaController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: konfigBudowaController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: konfigBudowaController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }

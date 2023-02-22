@@ -16,6 +16,5 @@
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
         public int UserID { get; set; }
-
     }
 }

@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WEB_Asystent.KlasyProgramu.Blok">
+    <Position X="13" Y="4.75" Width="2.75" />
+    <AssociationLine Name="bloklist" Type="WEB_Asystent.KlasyProgramu.Blok" ManuallyRouted="true">
+      <Path>
+        <Point X="15.75" Y="6.08" />
+        <Point X="16" Y="6.08" />
+        <Point X="16" Y="7.227" />
+        <Point X="15.75" Y="7.227" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.288" Y="0.463" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="parent" Type="WEB_Asystent.KlasyProgramu.Blok">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.472" Y="0.259" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="zakladka" Type="WEB_Asystent.Global.Zakladki" FixedToPoint="true">
+      <Path>
+        <Point X="13" Y="5.25" />
+        <Point X="11.75" Y="5.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="BlokiWewnetrzne" Type="WEB_Asystent.KlasyProgramu.Blok" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.75" Y="6" />
+        <Point X="16.475" Y="6" />
+        <Point X="16.475" Y="7.438" />
+        <Point X="15.75" Y="7.438" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.06" Height="0.182" Width="1.538" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ECAIAEAAEAAAgABEABAAFA4AABAAQAAAAEBgABAA8wA=</HashCode>
+      <FileName>KlasyProgramu\Blok.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="parent" />
+      <Field Name="zakladka" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="bloklist" />
+      <Property Name="BlokiWewnetrzne" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WEB_Asystent.Models.BlokModel">
+    <Position X="2.25" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAASAAAAAAQAAAAAAABAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Models\BlokModel.cs</FileName>
+      <NewMemberFileName>Models\KonfigBudowa.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WEB_Asystent.Global.globalne">
+    <Position X="6.5" Y="2.5" Width="2.25" />
+    <AssociationLine Name="Uzytkownicy" Type="WEB_Asystent.Global.User">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.135" Y="0.51" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Global\globalne.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="Uzytkownicy" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WEB_Asystent.Global.User">
+    <Position X="6.5" Y="4.75" Width="2.25" />
+    <AssociationLine Name="ListyZakladek" Type="WEB_Asystent.Global.Zakladki">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.21" Y="0.143" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAIAAAAAAAAAAAAgAAAEAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Global\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ListyZakladek" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WEB_Asystent.Global.Zakladki">
+    <Position X="10.25" Y="4.75" Width="1.5" />
+    <AssociationLine Name="user" Type="WEB_Asystent.Global.User">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.393" Y="0.077" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="User" Type="WEB_Asystent.Global.User">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.343" Y="0.118" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Blok" Type="WEB_Asystent.KlasyProgramu.Blok" FixedFromPoint="true">
+      <Path>
+        <Point X="11.75" Y="5.875" />
+        <Point X="13" Y="5.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.293" Y="0.077" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gAABAAAAAAAAAAAAAAAAAAgAACAAAAAAAQAgAABAAQE=</HashCode>
+      <FileName>Global\Zakladki.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="user" />
+      <Field Name="Blok" />
+      <Property Name="User" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

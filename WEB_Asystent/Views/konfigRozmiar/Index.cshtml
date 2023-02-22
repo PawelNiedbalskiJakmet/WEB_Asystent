@@ -1,131 +1,118 @@
-﻿@{
+﻿@model UserModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="tytylStrony">Konfiguracja Rozmiarow</h1>
- 
-</div>
-<div >
-  
-    <div  ng-app="app" ng-controller="CtrlSVG"  class="wid ">
-   @* <?xml version="1.0" encoding="utf-8"?>*@
-   <div >
- <div ng-repeat="x in zakladki" style="background-color:{{x.color}}"  class="zakladka" ng-click="zakladka_klikniete($event)">
-     {{x.nazwa}}
-   </div>
-   </div>
-  <div style="border-style: dashed;border-color: #d7d7d7;border-width:1px;border-radius: 5px;">
-
-
-
-
-
-    <div 
-    style="padding: 20px;"
-
->
-<svg  id="idBoxSvg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" ng-mouseleave="funcLeaveRect($event)" style="border-style: solid;border-width: 1px;border-color: #0000002e;">
-   @* <rect stroke="#000000" stroke-dashoffset="" fill-rule="nonzero" id="svg_1" x="0" y="0" width="500" height="500" style="color: rgb(0, 0, 0); stroke-width: 1px; fill: rgba(255, 255, 255, 0);" class="selected" fill-opacity="1" stroke-opacity="1"/>*@  
-
- <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%"  />
-  <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%"  /> 
-   <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" /> 
-
-     <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
-    <line stroke="blue" stroke-width="0.5" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" ng-attr-x1="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
-
-
-
-     <rect   fill="{{x._bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x._x+svgConfig.margines*100}}%"  ng-attr-y="{{x._y+svgConfig.margines*100}}%" ng-attr-width="{{x._width*svgConfig.obszar}}%" ng-attr-height="{{x._height*svgConfig.obszar}}%"/>
-  
-     
-
-
-
-
-    <foreignObject  class="konteneryRozmiarow" ng-attr-x="{{svgConfig.margines*100+svgConfig.obszar*100/2}}%" ng-attr-y="{{svgConfig.margines*100-1}}%" >
-        <div >
-<input type="text" ng-model="calosc.szerokosc"   id="in_szer" value="200" style="
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 1px;
-">
-    </div>
-</foreignObject>
-    <foreignObject class="konteneryRozmiarow" ng-attr-x="{{svgConfig.margines*100-5}}%" ng-attr-y="{{svgConfig.margines*100+svgConfig.obszar*100/2}}%" >
-        <div >
-<input type="text" ng-model="calosc.wysokosc" id="in_wys" value="200" style="
-     width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 1px;
-">
-    </div>
-</foreignObject>
-
-    <foreignObject class="konteneryRozmiarow" ng-attr-x="{{svgConfig.margines*100}}%" ng-attr-y="{{(svgConfig.margines*0.55)*100}}%">
-        <div >
-<input type="text" ng-model="calosc.glebokosc" id="in_glemb" value="200" style="
-     width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 1px;
-">
-    </div>
-</foreignObject>
-
-     <foreignObject class="kontener_form" x="20%" y="20%"  id="okno" >
-
-
-    <div   class="kontener" >
-           <div class="linia_form">
-       <label style="font-size:7px; width:100%" class="w_lini">Wstawianie blokow: </label>
-      
-     </div>
-     <div class="linia_form">
-       <label class="w_lini">Liczba blokow:</label>
-       <input style="color: black;" type="number" class="w_lini" value="0" ng-model="FormBlok.N">
-     </div>
-    <div class="linia_form">
-       <label class="w_lini">Orientacja</label>
-
-       <select  style="color: black;" class="w_lini" id="Id_orient" ng-model="FormBlok.Orientacja">
-  <option style="color: black; font-size: 10px" value="Poz">Poziomo</option>
-  <option style="color: black; font-size: 10px" value="Pion">Pionowo</option>
-      </select>
-
-     </div >
-         <div class="w_lini">
-     <button id="svg_id_ok" style="width: 100%;height: 10px;" ng_click="Klikniety($event)"> Potwierdz </button>
-
-     </div>
-        <div class="w_lini">
-     <button id="svg_id_anuluj" ng-click="hideForm($event)" style="width: 100%;height: 10px; background-color: #fb2f2f;"> Anuluj </button>
-
-     </div>
-    </div>
-  </foreignObject>
-
-</svg>
-    </div>
-  </div>
-
-
-    </div>
-   
-</div>
-    <div class="pasekPaneluKontrolnego">
-<div visible="{{}}">
 
 </div>
 <div>
-    <div>
+
+    @*    <div ng-app="app" ng-controller="CtrlSVG" class="wid " ng-init='myInit(@Json.Serialize(@Model))' >*@
+    <div ng-controller="CtrlSVG2" class="wid " ng-init='myInit(@Json.Serialize(@Model))'>
+        @* <?xml version="1.0" encoding="utf-8"?>*@
+        <div>
+            <div ng-repeat="x in user.zakladki" style="background-color:{{x.color}}" class="zakladka" ng-click="zakladka_klikniete($event)">
+                {{x.nazwa}}
+            </div>
+        </div>
+        <div style="border-style: dashed;border-color: #d7d7d7;border-width:1px;border-radius: 5px;">
+
+
+
+
+
+            <div style="padding: 20px;">
+                <svg id="idBoxSvg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" ng-mouseleave="funcLeaveRect($event)" style="border-style: solid;border-width: 1px;border-color: #0000002e;">
+                    @* <rect stroke="#000000" stroke-dashoffset="" fill-rule="nonzero" id="svg_1" x="0" y="0" width="500" height="500" style="color: rgb(0, 0, 0); stroke-width: 1px; fill: rgba(255, 255, 255, 0);" class="selected" fill-opacity="1" stroke-opacity="1"/>*@
+
+                    <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" />
+                    <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" />
+                    <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" />
+
+                    <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%" />
+                    <line stroke="blue" stroke-width="0.5" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" ng-attr-x1="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%" />
+
+
+
+                    <rect fill="{{x.bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in user.zakladkiselected.bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x.width_display*svgConfig.obszar}}%" ng-attr-height="{{x.height_display*svgConfig.obszar}}%" />
+
+
+
+
+
+
+         
+
+                    <foreignObject class="kontener_form" x="40%" y="40%" id="okno">
+
+
+                        <div class="kontener">
+                            <div class="linia_form">
+                                <label style="font-size:7px; width:100%" class="w_lini">Wstawianie blokow: </label>
+
+                            </div>
+                            <div class="linia_form">
+                                <label class="w_lini">Wysokość:</label>
+                                <input style="color: black;" type="number" class="w_lini" value="0"  ng-model="user.formblok.wysokosc">
+                            </div>
+                            <div class="linia_form">
+                                <label class="w_lini">Szerokość:</label>
+                                <input style="color: black;" type="number" class="w_lini" value="0"  ng-model="user.formblok.szerokosc">
+                            </div>
+                            <div class="w_lini">
+                                <button id="svg_id_ok" style="width: 100%;height: 10px;" ng_click="Klikniety($event)"> Potwierdz </button>
+
+                            </div>
+                            <div class="w_lini">
+                                <button id="svg_id_anuluj" ng-click="hideForm($event)" style="width: 100%;height: 10px; background-color: #fb2f2f;"> Anuluj </button>
+
+                            </div>
+                        </div>
+                    </foreignObject>
+
+                </svg>
+            </div>
+        </div>
+
 
     </div>
-    <div>
 
+</div>
+<div class="pasekPaneluKontrolnego" ng-controller="CtrlPanelKonfigBud">
+    <a asp-area="" asp-controller="konfigRozmiar" asp-action="Index">
+        <div class="Panel_dodaj">
+            <img src="Dodawanie.png" style="  width: 62px; margin: 1.6px">
+        </div>
+    </a>
+
+    <div>
+        <a asp-area="" asp-controller="konfigBudowa" asp-action="Index">
+            <div class="Panel_lewo_prawo">
+
+                <img src="Strzalka2.png" style="  width: 35px; margin: 1.6px">
+            </div>
+        </a>
+        <a asp-area="" asp-controller="konfigModuly" asp-action="Index">
+            <div class="Panel_lewo_prawo">
+                <img src="Strzalka.png" style="  width: 35px; margin: 1.6px">
+            </div>
+        </a>
+    </div>
+    <div style="
+    text-align: center;
+    font-size: 15px;
+    margin-top: 20px;
+">
+        krok 2 / 3
+    </div>
+    <div>
+    </div>
+    <div>
+        <div>
+        </div>
+        <div>
+        </div>
     </div>
 </div>
-    </div>

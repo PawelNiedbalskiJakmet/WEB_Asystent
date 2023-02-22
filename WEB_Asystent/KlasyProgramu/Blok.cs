@@ -22,7 +22,115 @@
         Blok parent;
         string ustawienie = "";
         private int id = 0;
+        public double SzerokoscZew
+        {
+            get
+            {
+                if (zakladka.szerokosc == 0)
+                {
+                    return -10;
+                }
+                else
+                {
+                    return zakladka.szerokosc * szerokosc / 100.0;
+                }
 
+            }
+            set
+            {
+                if (zakladka.szerokosc == 0)
+                {
+
+                }
+                else
+                {
+                    szerokosc = value * 100.0 / zakladka.szerokosc;
+                }
+
+            }
+        }
+        public double WysokoscZew
+        {
+            get
+            {
+                if (zakladka.wysokosc == 0)
+                {
+                    return -10;
+                }
+                else
+                {
+                    return zakladka.wysokosc * wysokosc / 100.0;
+                }
+              //  return zakladka.wysokosc * wysokosc / 100.0;
+            }
+            set
+            {
+                if (zakladka.wysokosc == 0)
+                {
+
+                }
+                else
+                {
+                    wysokosc = value * 100.0 / zakladka.wysokosc;
+                }
+              
+            }
+        }
+        public double SzerokoscWew
+        {
+            get
+            {
+                if (zakladka.szerokosc == 0)
+                {
+                    return -10;
+                }
+                else
+                {
+                    return (zakladka.szerokosc * szerokosc / 100) * 0.9;
+                }
+            
+            }
+            set
+            {
+                if (zakladka.szerokosc == 0)
+                {
+
+                }
+                else
+                {
+                    szerokosc = ((value / 0.9) * 100.0 / zakladka.szerokosc);
+                }
+             
+            }
+        }
+        public double WysokoscWew
+        {
+            get
+            {
+                if (zakladka.wysokosc == 0)
+                {
+                    return -10;
+                }
+                else
+                {
+                    return (zakladka.wysokosc * wysokosc / 100.0) * 0.9;
+                }
+
+               
+            }
+            set
+            {
+                if (zakladka.wysokosc == 0)
+                {
+
+                }
+                else
+                {
+                    wysokosc = ((value / 0.9) * 100.0) / zakladka.wysokosc;
+                }
+               
+            }
+        }
         public Blok(Blok _parent, double _szerokosc, double _wysokosc, int _nrWKolei)
         {
             szerokosc = _szerokosc;

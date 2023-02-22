@@ -302,6 +302,7 @@ transition: all 0.5s linear;*/
     margin-bottom: 10px;
     box-shadow: 0px -15px 12px 0px #08222a59;
 }
+
 .kafelekLewy:hover {
     transform: translate(0px, -1px);
     box-shadow: 0px 4px 20px 3px rgba(167, 227, 255, 1);
@@ -416,4 +417,37 @@ transition: all 0.5s linear;*/
     font-size: 5px;
     color: blue;
 }
+.Panel_lewo_prawo {
+    display: inline-block;
+    border: 2px;
+    border-color: #ffffffa1;
+    border-style: dashed;
+    background-color: #caf1ff00;
+    border-radius: 14px;
+    /* margin: 10px; */
+    box-shadow: 0px -15px 12px 0px #08222a59;
+}
+    .Panel_lewo_prawo:hover {
+        transform: translate(0px, -1px);
+        box-shadow: 0px 4px 20px 3px rgba(167, 227, 255, 1);
+        transition: all 0.1s linear;
+    }
+.Panel_dodaj {
+    border: 2px;
+    border-color: #ffffffa1;
+    border-style: dashed;
+    background-color: #caf1ff00;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0px -15px 12px 0px #08222a59;
+ 
+}
+    .Panel_dodaj:hover
+{
+    transform: translate(0px, -1px);
+    box-shadow: 0px 4px 20px 3px rgba(167, 227, 255, 1);
+    transition: all 0.1s linear;
+}
+   
+
 

@@ -7,12 +7,16 @@ namespace WEB_Asystent.Global
         public static int cnt_zakladek = 0;
 
         private User user;
+
+        public double szerokosc;
+        public double wysokosc;
+        public double glebokosc;
         public User User { get { return user; } }
         public Zakladki(string _nazwa, User _user)
-        { 
+        {
             CNT = 0;
             cnt_zakladek++;
-           
+
             Nazwa = _nazwa;
             ZakladkaID = cnt_zakladek;
             Blok = new Blok(this);
@@ -31,7 +35,7 @@ namespace WEB_Asystent.Global
         }
 
         public string Nazwa { get; set; }
-       
+
         public Blok Blok;
 
         public int ZakladkaID { get; set; }
@@ -43,6 +47,5 @@ namespace WEB_Asystent.Global
             }
         }
         private int CNT;
-
     }
 }
