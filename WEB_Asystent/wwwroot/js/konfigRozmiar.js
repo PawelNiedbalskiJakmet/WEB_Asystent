@@ -2,7 +2,7 @@
 
   
     scop.user = {
-        imie: Wspolne.getUser().imie, nazwisko: Wspolne.getUser().nazwisko, id: Wspolne.getUser().id, formblok: { wysokosc: 2, szerokosc: 2 }, datablokukliknietego: { x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }, zakladkiselected: { nazwa: "wom", id: 1, color: "white", calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, bloki: [{ x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }] }, zakladki: [{ nazwa: "wom", id: 1, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ x: 0, y: 0, width: 100, height: 100, bg_color: "white", id: 1 }] }, { nazwa: "pom", id: 2, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ x_display: 0, y_display: 0, width_display: 100, height_display: 100, bg_color: "white", id: 1 }] }]  };
+        imie: Wspolne.getUser().imie, nazwisko: Wspolne.getUser().nazwisko, id: Wspolne.getUser().id, formblok: { wysokosc: 2, szerokosc: 2 }, datablokukliknietego: { wprowadzonowymiar: false, czyrealny: 0, x_display: 0, y_display: 0, width_display: 100, height_display: 100, width_zew: 100, height_zew: 100, width_wew: 90, height_wew: 90, bg_color: "white", id: 1 }, zakladkiselected: { nazwa: "wom", id: 1, color: "white", calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, bloki: [{ zablokowanaszerokosc: false, zablokowanawysokosc: false, wprowadzonowymiar: false, czyrealny: 0, x_display: 0, y_display: 0, width_display: 100, height_display: 100, width_zew: 100, height_zew: 100, width_wew: 90, height_wew: 90, bg_color: "white", id: 1 }] }, zakladki: [{ nazwa: "wom", id: 1, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ zablokowanaszerokosc: false, zablokowanawysokosc: false, wprowadzonowymiar: false, czyrealny: 0, x: 0, y: 0, width: 100, height: 100, width_zew: 100, height_zew: 100, width_wew: 90, height_wew: 90, bg_color: "white", id: 1 }] }, { nazwa: "pom", id: 2, calosc: { glebokosc: 0, szerokosc: 0, wysokosc: 0 }, color: "#d1edff", bloki: [{ zablokowanaszerokosc: false, zablokowanawysokosc: false, wprowadzonowymiar: false, czyrealny: 0,  x_display: 0, y_display: 0, width_display: 100, height_display: 100, width_zew: 100, height_zew: 100, width_wew: 90, height_wew: 90, bg_color: "white", id: 1 }] }]  };
 
 
 
@@ -129,12 +129,12 @@
      //   scop.updateUser();
     //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
         var dataOut = scop.user;
-        $.post("konfigRozmiar/PostDodajBloki", dataOut, function (data) {
+        $.post("konfigRozmiar/PostZmienRozmiar", dataOut, function (data) {
             scop.user.zakladkiselected.bloki = data;
             if (scop.Pokazane == true) {
                 $("#okno").hide();
                 scop.Pokazane = false;
-                scop.user.formblok = { n: 0, orientacja: "POZ" };
+                scop.user.formblok = { wysokosc: 0, szerokosc: 0 };
             } //   $scope.model.count++;
             scop.$apply();
         });

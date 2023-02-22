@@ -17,6 +17,18 @@
 
     }
 
+    //PostUpdateWymiaryCalosci
+
+    scop.updatedWymiary = function (eventy) { // potwierdzenie dodanie prostokatow
+        //   scop.updateUser();
+        //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
+        var dataOut = scop.user;
+        $.post("konfigBudowa/PostUpdateWymiaryCalosci", dataOut, function (data) {
+       
+        });
+    };
+
+
     scop.$watch(function () { return Wspolne.getUser(); }, function (newValue, oldValue) { // odczytanie aktualnego usera
     //    if (newValue.id !== oldValue.id) {
 
@@ -126,9 +138,11 @@
     };
 
     scop.Klikniety = function (eventy) { // potwierdzenie dodanie prostokatow
-     //   scop.updateUser();
-    //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
-        var dataOut = scop.user;
+        //   scop.updateUser();
+        //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
+        var dataOut = { id: scop.user.id, formblok: scop.user.formblok, datablokukliknietego: { id: scop.user.datablokukliknietego.id }, zakladkiselected: { id: scop.user.zakladkiselected.id } };
+    
+      //  var dataOut = scop.user;
         $.post("konfigBudowa/PostDodajBloki", dataOut, function (data) {
             scop.user.zakladkiselected.bloki = data;
             if (scop.Pokazane == true) {

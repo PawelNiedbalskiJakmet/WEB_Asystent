@@ -18,6 +18,12 @@ namespace WEB_Asystent.Models
         public string bg_color { get; set; }
         public int id { get; set; }
 
+        public int czyrealny { get; set; }
+        public bool wprowadzonowymiar { get; set; }
+
+        public bool zablokowanaszerokosc { get; set; }
+        public bool zablokowanawysokosc { get; set; }
+
 
 
         public BlokModel()
@@ -28,6 +34,10 @@ namespace WEB_Asystent.Models
             height_display = 100;
             bg_color = "white";
             id = 1;
+            czyrealny = 0;
+            wprowadzonowymiar = false;
+            zablokowanaszerokosc = false;
+            zablokowanawysokosc = false;
 
         }
 
@@ -42,8 +52,20 @@ namespace WEB_Asystent.Models
             height_wew = _blok.WysokoscWew;
             width_zew = _blok.SzerokoscZew;
             height_zew = _blok.WysokoscZew;
+            wprowadzonowymiar = _blok.WskaznikUstawieniaWymiaruPrzezUzytkownika;
+
+            if (_blok.BlokiWewnetrzne.Count > 0)
+            {
+                czyrealny = 0;
+            }
+            else
+            {
+                czyrealny = 1;
+            }
 
 
+            zablokowanaszerokosc = _blok.zablokowanaSzerokosc;
+            zablokowanawysokosc = _blok.zablokowanaWysokosc;
             bg_color = "white";
             id = _blok.ID;
 

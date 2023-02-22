@@ -48,7 +48,7 @@
 
     <foreignObject  class="konteneryRozmiarow" ng-attr-x="{{svgConfig.margines*100+svgConfig.obszar*100/2}}%" ng-attr-y="{{svgConfig.margines*100-1}}%" >
         <div >
-                            <input type="text" ng-model="user.zakladkiselected.calosc.szerokosc" id="in_szer" value="200" style="
+                            <input type="number" ng-blur="updatedWymiary($event)" ng-model="user.zakladkiselected.calosc.szerokosc" id="in_szer" value="200" style="
     width: 100%;
     height: 100%;
     margin: 0;
@@ -58,7 +58,7 @@
 </foreignObject>
     <foreignObject class="konteneryRozmiarow" ng-attr-x="{{svgConfig.margines*100-5}}%" ng-attr-y="{{svgConfig.margines*100+svgConfig.obszar*100/2}}%" >
         <div >
-                            <input type="text" ng-model="user.zakladkiselected.calosc.wysokosc" id="in_wys" value="200" style="
+                            <input type="number" ng-blur="updatedWymiary($event)" ng-model="user.zakladkiselected.calosc.wysokosc" id="in_wys" value="200" style="
      width: 100%;
     height: 100%;
     margin: 0;
@@ -69,7 +69,7 @@
 
     <foreignObject class="konteneryRozmiarow" ng-attr-x="{{svgConfig.margines*100}}%" ng-attr-y="{{(svgConfig.margines*0.55)*100}}%">
         <div >
-                            <input type="text" ng-model="user.zakladkiselected.calosc.glebokosc" id="in_glemb" value="200" style="
+                            <input type="number" ng-blur="updatedWymiary($event)" ng-model="user.zakladkiselected.calosc.glebokosc" id="in_glemb" value="200" style="
      width: 100%;
     height: 100%;
     margin: 0;

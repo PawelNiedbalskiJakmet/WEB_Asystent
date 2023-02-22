@@ -1,7 +1,4 @@
-﻿using WEB_Asystent.Global;
-using WEB_Asystent.KlasyProgramu;
-
-namespace WEB_Asystent.Models
+﻿namespace WEB_Asystent.Models
 {
     public class ZakladkaModel
     {

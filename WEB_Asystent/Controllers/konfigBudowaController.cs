@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WEB_Asystent.Models;
+using static WEB_Asystent.Models.ZakladkaModel;
 //using System.Web.Mvc;
 
 namespace WEB_Asystent.Controllers
@@ -15,17 +16,7 @@ namespace WEB_Asystent.Controllers
             return View(obiekt);
         }
 
-        // GET: konfigBudowaController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: konfigBudowaController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }     
         [HttpPost]
         public JsonResult PostUpdateUser(UserModel data) // odczytanie danych dla danego Usera
         {
@@ -42,6 +33,35 @@ namespace WEB_Asystent.Controllers
             else
             {
                 doReturn = new UserModel();
+            }
+            return Json(doReturn);
+
+        }
+        [HttpPost]
+        public JsonResult PostUpdateWymiaryCalosci(UserModel data) // odczytanie danych dla danego Usera
+        {
+            wymiary doReturn;//
+            if (data != null)
+            {
+
+                var zakladka = globalne.Uzytkownicy.Find(x => x.UserID == data.id).ListyZakladek.Find(y => y.ZakladkaID == data.zakladkiselected.id);
+
+
+                zakladka.szerokosc = data.zakladkiselected.calosc.szerokosc;
+                zakladka.wysokosc = data.zakladkiselected.calosc.wysokosc;
+                zakladka.glebokosc = data.zakladkiselected.calosc.glebokosc;
+
+                zakladka.Blok.SzerokoscZew = zakladka.szerokosc;
+                zakladka.Blok.WysokoscZew = zakladka.wysokosc;
+
+                doReturn = new wymiary(zakladka.szerokosc, zakladka.wysokosc, zakladka.glebokosc);
+
+
+
+            }
+            else
+            {
+                doReturn = new wymiary();
             }
             return Json(doReturn);
 
@@ -70,6 +90,9 @@ namespace WEB_Asystent.Controllers
 
 
             }
+
+
+            var doReturn = (IEnumerable<BlokModel>)listaModeli;
 
 
             var doReturn = (IEnumerable<BlokModel>)listaModeli;
@@ -109,6 +132,6 @@ namespace WEB_Asystent.Controllers
             return Json(doReturn);
         }
 
-       
+
     }
 }

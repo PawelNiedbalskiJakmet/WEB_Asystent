@@ -97,12 +97,12 @@ namespace WEB_Asystent.Controllers
                     var modelObiekt = new BlokModel(obiekt);
                 }
 
-                    //  JsonConvert.SerializeObject(products, Formatting.Indented);
-                }
+                //  JsonConvert.SerializeObject(products, Formatting.Indented);
+            }
 
 
 
-                var doReturn = (IEnumerable<BlokModel>)listaModeli;
+            var doReturn = (IEnumerable<BlokModel>)listaModeli;
 
             return Json(doReturn);
         }

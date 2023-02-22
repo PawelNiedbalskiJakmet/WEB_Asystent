@@ -36,9 +36,10 @@
 
 
 
-                    <rect fill="{{x.bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in user.zakladkiselected.bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x.width_display*svgConfig.obszar}}%" ng-attr-height="{{x.height_display*svgConfig.obszar}}%" />
-
-
+                    
+                    <rect fill="{{ x.wprowadzonowymiar ? '#9fff9f' : x.bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in user.zakladkiselected.bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x.width_display*svgConfig.obszar}}%" ng-attr-height="{{x.height_display*svgConfig.obszar}}%" />
+                    <text ng-if="x.czyrealny==1" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100+x.width_display*svgConfig.obszar/2}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100+x.height_display*svgConfig.obszar/2}}%" fill="#7c73e9" ng-repeat="x in user.zakladkiselected.bloki">{{"W: " +x.height_zew+" ("+x.height_wew+")"}}</text>
+                    <text ng-if="x.czyrealny==1" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100+x.width_display*svgConfig.obszar/2}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100+1+x.height_display*svgConfig.obszar/2}}%" fill="#7c73e9" ng-repeat="x in user.zakladkiselected.bloki">{{"S: " +x.width_zew+" ("+x.width_wew+")"}}</text>
 
 
 

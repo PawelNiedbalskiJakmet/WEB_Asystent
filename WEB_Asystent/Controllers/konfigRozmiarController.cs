@@ -13,9 +13,100 @@ namespace WEB_Asystent.Controllers
         }
 
         // GET: konfigBudowaController/Details/5
-        public ActionResult Details(int id)
+
+        [HttpPost]
+        public JsonResult PostUpdateUser(UserModel data) // odczytanie danych dla danego Usera
         {
-            return View();
+            UserModel doReturn;//
+            if (data != null)
+            {
+
+                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.id);
+                doReturn = new UserModel(podstawa);
+
+
+
+            }
+            else
+            {
+                doReturn = new UserModel();
+            }
+            return Json(doReturn);
+
+        }
+        [HttpPost]
+        public JsonResult PostZmieniaZakladke(UserModel data) // przerzuca zakladke
+        {
+            var listaModeli = new List<BlokModel>();
+            // test here!
+            if (data != null)
+            {
+                //data.UserID= data.UserID;
+                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.id).ListyZakladek.Find(y => y.ZakladkaID == data.zakladkiselected.id).Blok;
+
+                // var wyszukany = podstawa.Przeszukaj(data.ID);
+                // wyszukany.dodajBloki(data.cnt, data.orientacja);
+
+                var obiektowa = podstawa.ZrobListeDown();
+
+
+                foreach (var obiekt in obiektowa)
+                {
+                    var modelObiekt = new BlokModel(obiekt);
+                    listaModeli.Add(modelObiekt);
+                }
+
+
+            }
+
+
+            var doReturn = (IEnumerable<BlokModel>)listaModeli;
+
+
+            return Json(doReturn);
+        }
+        [HttpPost]
+        public JsonResult PostZmienRozmiar(UserModel data) // dodanie nowego bloku do zakladki do uzytkownika
+        {
+            var listaModeli = new List<BlokModel>();
+            // test here!
+            if (data != null)
+            {
+                //data.UserID= data.UserID;
+                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.id).ListyZakladek.Find(y => y.ZakladkaID == data.zakladkiselected.id).Blok;
+
+                var wyszukany = podstawa.Przeszukaj(data.datablokukliknietego.id);
+                //   wyszukany.WskaznikUstawieniaWymiaruPrzezUzytkownika = true;
+                //  wyszukany.dodajBloki(data.formblok.n, data.formblok.orientacja);
+                if (data.formblok.szerokosc > 0)
+                {
+                    wyszukany.ZmienSzerokosc(data.formblok.szerokosc);
+                }
+
+                if (data.formblok.wysokosc > 0)
+                {
+                    wyszukany.ZmienWysokosc(data.formblok.wysokosc);
+                }
+
+
+
+                var obiektowa = podstawa.ZrobListeDown();
+
+
+                foreach (var obiekt in obiektowa)
+                {
+                    var modelObiekt = new BlokModel(obiekt);
+                    listaModeli.Add(modelObiekt);
+                }
+
+                //  JsonConvert.SerializeObject(products, Formatting.Indented);
+            }
+
+
+
+            var doReturn = (IEnumerable<BlokModel>)listaModeli;
+
+            return Json(doReturn);
         }
 
         // GET: konfigBudowaController/Create

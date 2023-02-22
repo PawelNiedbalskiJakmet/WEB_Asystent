@@ -7,6 +7,9 @@
         //   private static List<Blok> listaTymczasowa = new List<Blok>();
         private double x;
         private double y;
+        private bool ustawionoWymiar = false;
+        public bool zablokowanaSzerokosc { get; set; }
+        public bool zablokowanaWysokosc { get; set; }
         //public static List<Blok> OdczytajPotomneBloki(Blok _blok)
         //{
         //    Blok.listaTymczasowa = new List<Blok>();
@@ -44,7 +47,17 @@
                 }
                 else
                 {
-                    szerokosc = value * 100.0 / zakladka.szerokosc;
+                    if (!zablokowanaSzerokosc)
+                    {
+                        szerokosc = value * 100.0 / zakladka.szerokosc;
+                        zablokowanaSzerokosc = true;
+                    }
+                    else
+                    {
+
+                    }
+
+
                 }
 
             }
@@ -61,7 +74,7 @@
                 {
                     return zakladka.wysokosc * wysokosc / 100.0;
                 }
-              //  return zakladka.wysokosc * wysokosc / 100.0;
+                //  return zakladka.wysokosc * wysokosc / 100.0;
             }
             set
             {
@@ -71,9 +84,18 @@
                 }
                 else
                 {
-                    wysokosc = value * 100.0 / zakladka.wysokosc;
+                    if (!zablokowanaWysokosc)
+                    {
+                        wysokosc = value * 100.0 / zakladka.wysokosc;
+                        zablokowanaWysokosc = true;
+                    }
+                    else
+                    {
+
+                    }
+                    // wysokosc = value * 100.0 / zakladka.wysokosc;
                 }
-              
+
             }
         }
         public double SzerokoscWew
@@ -88,7 +110,7 @@
                 {
                     return (zakladka.szerokosc * szerokosc / 100) * 0.9;
                 }
-            
+
             }
             set
             {
@@ -100,7 +122,7 @@
                 {
                     szerokosc = ((value / 0.9) * 100.0 / zakladka.szerokosc);
                 }
-             
+
             }
         }
         public double WysokoscWew
@@ -116,7 +138,7 @@
                     return (zakladka.wysokosc * wysokosc / 100.0) * 0.9;
                 }
 
-               
+
             }
             set
             {
@@ -128,11 +150,27 @@
                 {
                     wysokosc = ((value / 0.9) * 100.0) / zakladka.wysokosc;
                 }
-               
+
+            }
+        }
+        public bool WskaznikUstawieniaWymiaruPrzezUzytkownika
+        {
+            get
+            {
+                return ustawionoWymiar;
+
+            }
+            set
+            {
+                ustawionoWymiar = value;
+
             }
         }
         public Blok(Blok _parent, double _szerokosc, double _wysokosc, int _nrWKolei)
         {
+            zablokowanaSzerokosc = false;
+            zablokowanaWysokosc = false;
+
             szerokosc = _szerokosc;
             wysokosc = _wysokosc;
             parent = _parent;
@@ -166,6 +204,8 @@
         {
             x = 0;
             y = 0;
+            zablokowanaSzerokosc = false;
+            zablokowanaWysokosc = false;
 
             szerokosc = 100;
             wysokosc = 100;
@@ -180,13 +220,21 @@
         }
         public void ZmienSzerokosc(double wartoscSzerokosci)
         {
+            WskaznikUstawieniaWymiaruPrzezUzytkownika = true;
+            if (!zablokowanaSzerokosc)
+            {
+                parent.ZmienSzerokoscDown(wartoscSzerokosci);
+            }
 
-            parent.ZmienSzerokoscDown(wartoscSzerokosci);
         }
         public void ZmienWysokosc(double wartoscWysokosci)
         {
+            WskaznikUstawieniaWymiaruPrzezUzytkownika = true;
+            if (!zablokowanaWysokosc)
+            {
+                parent.ZmienWysokoscDown(wartoscWysokosci);
+            }
 
-            parent.ZmienWysokoscDown(wartoscWysokosci);
         }
 
         public Blok NajszerszaGrupaZbierajacaPionowe()
@@ -224,23 +272,122 @@
             switch (ustawienie)
             {
                 case "PION":
-                    szerokosc = wartoscSzerokosci;
-                    foreach (Blok blok in bloklist)
+
+                    // szerokosc = wartoscSzerokosci;
+                    if (!czyWDownZablokowanoSzerokosc())
                     {
-                        blok.ZmienSzerokoscDown(wartoscSzerokosci);
+                        SzerokoscZew = wartoscSzerokosci;
+
+                        foreach (Blok blok in bloklist)
+                        {
+                            blok.ZmienSzerokoscDown(wartoscSzerokosci);
+                        }
                     }
+
                     break;
                 case "POZ":
 
+                    //  SzerokoscZew = wartoscSzerokosci;
+
+                    var roznica = wartoscSzerokosci - szerokoscZablokowanych();
+                    var liczba = liczbaSzerokosciZablokowanych();
+                    if (liczba != 0)
+                    {
+                        foreach (Blok blok in bloklist)
+                        {
+                            if (!blok.zablokowanaSzerokosc)
+                            {
+                                blok.ZmienSzerokoscDown(roznica / liczba);
+                            }
+
+                        }
+                    }
+
+
                     break;
                 default:
-                    szerokosc = wartoscSzerokosci;
+
+                    SzerokoscZew = wartoscSzerokosci;
                     // parent.ZmienSzerokosc(wartoscSzerokosci);
                     break;
             }
 
 
 
+        }
+        private double szerokoscZablokowanych()
+        {
+            var suma = 0.0;
+            foreach (var blok in bloklist)
+            {
+                if (blok.zablokowanaSzerokosc)
+                {
+                    suma = suma + blok.SzerokoscZew;
+                }
+            }
+            return suma;
+        }
+        private double liczbaSzerokosciZablokowanych()
+        {
+            var suma = 0;
+            foreach (var blok in bloklist)
+            {
+                if (!blok.zablokowanaSzerokosc)
+                {
+                    suma++;
+                }
+            }
+            return suma;
+        }
+        private double wysokoscZablokowanych()
+        {
+            var suma = 0.0;
+            foreach (var blok in bloklist)
+            {
+                if (blok.zablokowanaWysokosc)
+                {
+                    suma = suma + blok.WysokoscZew;
+                }
+            }
+            return suma;
+        }
+        private double liczbaWysokosciZablokowanych()
+        {
+            var suma = 0;
+            foreach (var blok in bloklist)
+            {
+                if (!blok.zablokowanaWysokosc)
+                {
+                    suma++;
+                }
+            }
+            return suma;
+        }
+        private bool czyWDownZablokowanoSzerokosc()
+        {
+            bool czy = false;
+            foreach (Blok blok in bloklist)
+            {
+                if (blok.zablokowanaSzerokosc)
+                {
+                    czy = true;
+                    break;
+                };
+            }
+            return czy;
+        }
+        private bool czyWDownZablokowanoWysokosc()
+        {
+            bool czy = false;
+            foreach (Blok blok in bloklist)
+            {
+                if (blok.zablokowanaWysokosc)
+                {
+                    czy = true;
+                    break;
+                };
+            }
+            return czy;
         }
         public void ZmienWysokoscDown(double wartoscWysokosci)
         {
@@ -249,17 +396,29 @@
             switch (ustawienie)
             {
                 case "PION":
+                    var roznica = wartoscWysokosci - wysokoscZablokowanych();
+                    var liczba = liczbaWysokosciZablokowanych();
+                    if (liczba != 0)
+                    {
+                        foreach (Blok blok in bloklist)
+                        {
+                            if (!blok.zablokowanaSzerokosc)
+                            {
+                                blok.ZmienWysokoscDown(roznica / liczba);
+                            }
 
+                        }
+                    }
                     break;
                 case "POZ":
-                    wysokosc = wartoscWysokosci;
+                    WysokoscZew = wartoscWysokosci;
                     foreach (Blok blok in bloklist)
                     {
                         blok.ZmienWysokoscDown(wartoscWysokosci);
                     }
                     break;
                 default:
-                    wysokosc = wartoscWysokosci;
+                    WysokoscZew = wartoscWysokosci;
 
                     break;
             }
