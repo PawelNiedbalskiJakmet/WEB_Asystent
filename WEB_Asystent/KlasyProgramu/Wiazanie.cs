@@ -1,4 +1,4 @@
-﻿namespace  WEB_Asystent.KlasyProgramu
+﻿namespace WEB_Asystent.KlasyProgramu
 {
     internal class Wiazanie
     {

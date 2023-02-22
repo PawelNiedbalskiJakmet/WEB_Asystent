@@ -11,14 +11,16 @@ namespace WEB_Asystent.Models
         public int cnt { get; set; }
         public string orientacja { get; set; }
         public int ID { get; set; }
-             public int UserID { get; set; }
+        public int UserID { get; set; }
+
+        public int ZakladkaID { get; set; }
 
         public KonfigBudowa() { }
 
         /// <param name="_blok">obiekt typu blok konwertowany na model</param>
-        public KonfigBudowa (Blok _blok)
+        public KonfigBudowa(Blok _blok)
         {
-            
+
 
             ID = _blok.ID;
             orientacja = _blok.Ustawienie;
@@ -27,7 +29,8 @@ namespace WEB_Asystent.Models
             Width = _blok.Szerokosc;
             Height = _blok.Wysokosc;
             UserID = _blok.UserID;
-         
+            ZakladkaID = _blok.ZakladkaID;
+
         }
 
 

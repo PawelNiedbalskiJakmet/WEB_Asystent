@@ -1,16 +1,21 @@
-﻿using WEB_Asystent.KlasyProgramu;
-namespace WEB_Asystent.Global
+﻿namespace WEB_Asystent.Global
 {
     public class User
     {
         public User()
         {
-            CNT = 0;
+            ListyZakladek = new List<Zakladki>();
         }
-        public Blok Blok { get; set; }
+        public void DodajZakladke(string _nazwa)
+        {
+            ListyZakladek.Add(new Zakladki(_nazwa, this));
+        }
+        public List<Zakladki> ListyZakladek
+        { get; set; }
+        // public Blok Blok { get; set; }
         public string Imie { get; set; }
         public string Nazwisko { get; set; }
         public int UserID { get; set; }
-        public int CNT { get; set; }
+
     }
 }

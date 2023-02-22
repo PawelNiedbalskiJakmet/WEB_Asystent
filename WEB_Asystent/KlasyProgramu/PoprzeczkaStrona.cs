@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WEB_Asystent.KlasyProgramu
+﻿namespace WEB_Asystent.KlasyProgramu
 {
     internal class PoprzeczkaStrona
     {

@@ -1,16 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using WEB_Asystent.Global;
-
-
-namespace WEB_Asystent.KlasyProgramu
+﻿namespace WEB_Asystent.KlasyProgramu
 {
     public class Blok
     {
-      //  private static int cnt=0;
-        private User uzytkownik;
-     //   private static List<Blok> listaTymczasowa = new List<Blok>();
+        //  private static int cnt=0;
+        private Zakladki zakladka;
+        //   private static List<Blok> listaTymczasowa = new List<Blok>();
         private double x;
         private double y;
         //public static List<Blok> OdczytajPotomneBloki(Blok _blok)
@@ -20,7 +14,7 @@ namespace WEB_Asystent.KlasyProgramu
         //    _blok.odnajdzBlokiPotomne();
 
         //    return listaTymczasowa;
-       // }
+        // }
         // dunamiczne elementy
         double szerokosc;
         double wysokosc;
@@ -29,14 +23,14 @@ namespace WEB_Asystent.KlasyProgramu
         string ustawienie = "";
         private int id = 0;
 
-        public Blok(Blok _parent,double _szerokosc, double _wysokosc, int _nrWKolei)
+        public Blok(Blok _parent, double _szerokosc, double _wysokosc, int _nrWKolei)
         {
             szerokosc = _szerokosc;
             wysokosc = _wysokosc;
             parent = _parent;
-            uzytkownik = _parent.uzytkownik;
-            uzytkownik.CNT++;
-            id = uzytkownik.CNT;
+            zakladka = _parent.zakladka;
+            zakladka.IncCNT();
+            id = zakladka.wygenerowaneId;
             if (_parent.Ustawienie == "POZ")
             {
                 x = szerokosc * _nrWKolei + _parent.X;
@@ -45,7 +39,7 @@ namespace WEB_Asystent.KlasyProgramu
             else;
             if (_parent.Ustawienie == "PION")
             {
-                x=_parent.X;
+                x = _parent.X;
                 y = wysokosc * _nrWKolei + _parent.Y;
             }
             else;
@@ -60,17 +54,17 @@ namespace WEB_Asystent.KlasyProgramu
         //    cnt++;
         //    id = cnt;
         //}
-        public Blok(User _user)
+        public Blok(Zakladki _zakladka)
         {
             x = 0;
             y = 0;
-         
+
             szerokosc = 100;
             wysokosc = 100;
-//id = cnt;
-            uzytkownik = _user; 
-            uzytkownik.CNT++;
-            id = uzytkownik.CNT;
+            //id = cnt;
+            zakladka = _zakladka;
+            zakladka.IncCNT();
+            id = zakladka.wygenerowaneId;
         }
         public Blok()
         {
@@ -90,9 +84,9 @@ namespace WEB_Asystent.KlasyProgramu
         public Blok NajszerszaGrupaZbierajacaPionowe()
         {
             var ob = this;
-            if(parent.ustawienie=="PION")
+            if (parent.ustawienie == "PION")
             {
-                ob=parent.NajszerszaGrupaZbierajacaPionowe();
+                ob = parent.NajszerszaGrupaZbierajacaPionowe();
             }
             else
             {
@@ -107,13 +101,13 @@ namespace WEB_Asystent.KlasyProgramu
             {
                 obc.zrobListeDown(_input);
             }
-       return _input;
+            return _input;
         }
         public List<Blok> ZrobListeDown()
         {
-           var zmienna= new List<Blok>();
+            var zmienna = new List<Blok>();
             this.zrobListeDown(zmienna);
-            return zmienna ;
+            return zmienna;
         }
         public void ZmienSzerokoscDown(double wartoscSzerokosci)
         {
@@ -198,23 +192,23 @@ namespace WEB_Asystent.KlasyProgramu
                 switch (ustawienie)
                 {
                     case "PION":
-                         blok = new Blok(this,szerokosc,wysokosc/_liczba,i);
+                        blok = new Blok(this, szerokosc, wysokosc / _liczba, i);
 
                         break;
                     case "POZ":
-                        blok = new Blok(this, szerokosc / (_liczba), wysokosc,i);
+                        blok = new Blok(this, szerokosc / (_liczba), wysokosc, i);
                         break;
                     default:
-                        blok = new Blok(this, szerokosc, wysokosc,i);
+                        blok = new Blok(this, szerokosc, wysokosc, i);
                         break;
 
                 }
-               // Blok blok = new Blok(this,);
+                // Blok blok = new Blok(this,);
                 bloklist.Add(blok);
 
             }
         }
-    
+
         public double X
         {
 
@@ -237,12 +231,12 @@ namespace WEB_Asystent.KlasyProgramu
             }
             set
             {
-                y= value;
+                y = value;
             }
 
         }
-    
-    
+
+
         public double Wysokosc
         {
             get
@@ -253,15 +247,24 @@ namespace WEB_Asystent.KlasyProgramu
             {
                 wysokosc = value;
             }
-            
+
         }
         public int UserID
         {
             get
             {
-                return uzytkownik.UserID;
+                return zakladka.User.UserID;
             }
-  
+
+
+        }
+        public int ZakladkaID
+        {
+            get
+            {
+                return zakladka.ZakladkaID;
+            }
+
 
         }
         public double Szerokosc
@@ -276,33 +279,33 @@ namespace WEB_Asystent.KlasyProgramu
             }
 
         }
-     
-        private Blok Przeszukaj(int _ID, Blok odszukane) // to chyba nie dziala
-        {
-            Blok zmienna=odszukane;// = this;
-          //  Blok.cnt--;
-            if (bloklist != null)
-            {
-                foreach (Blok _blok in bloklist)
-                {
-                    if (_blok.ID == _ID)
-                    {
-                        zmienna = _blok;
-                        break;
-                    }
-                    else
-                    {
-                     zmienna=  _blok.Przeszukaj(_ID,odszukane);
 
-                    }
-                }
-            }
-            return zmienna;
+        //private Blok Przeszukaj(int _ID, Blok odszukane) // to chyba nie dziala
+        //{
+        //    Blok zmienna = odszukane;// = this;
+        //                             //  Blok.cnt--;
+        //    if (bloklist != null)
+        //    {
+        //        foreach (Blok _blok in bloklist)
+        //        {
+        //            if (_blok.ID == _ID)
+        //            {
+        //                zmienna = _blok;
+        //                break;
+        //            }
+        //            else
+        //            {
+        //                zmienna = _blok.Przeszukaj(_ID, odszukane);
 
-        }
+        //            }
+        //        }
+        //    }
+        //    return zmienna;
+
+        //}
         public Blok Przeszukaj(int _ID)
         {
-         
+
             return ZrobListeDown().Find(x => x.ID == _ID);
 
         }
@@ -353,12 +356,12 @@ namespace WEB_Asystent.KlasyProgramu
         }
         public override string ToString()
         {
-            return id+" "+ustawienie+" "+ szerokosc+" "+wysokosc;
+            return id + " " + ustawienie + " " + szerokosc + " " + wysokosc;
         }
 
         public int ID
         {
-         
+
             get
             {
                 return id;
@@ -367,7 +370,7 @@ namespace WEB_Asystent.KlasyProgramu
             {
                 id = value;
             }
-        
+
         }
     }
 

@@ -1,6 +1,8 @@
 ﻿function SvgFunct(scop) {
     scop.bloki = [{ _x: 0, _y: 0, _width: 100, _height: 100, _bg_color: "white", id: 1 }];
-    scop.zakladki = [{ nazwa: "wom", id: 1, color: "#d1edff" }, { nazwa: "pom", id: 2, color: "#d1edff" }];
+    scop.zakladki = [{ Nazwa: "wom", ID: 1, color: "#d1edff" }, { Nazwa: "pom", ID: 2, color: "#d1edff" }];
+    scop.zakladkiSelected = { Nazwa: "wom", ID: 1 };
+    scop.DataBlokuKliknietego = { _x: 0, _y: 0, _width: 0, _height: 0, ID: 0 };
     scop.Pokazane = false;
     scop.DataBlokuKliknietego = { _x: 0, _y: 0, _width: 0, _height: 0 , ID:0};
     scop.FormBlok = { N: 2, Orientacja: "POZ" };
@@ -14,11 +16,22 @@
     }
     scop.zakladka_klikniete = function (eventy) {
 
-        var zmienna = eventy.target.x;
+        // var zmienna = eventy.target.x;
+        scop.zakladkiSelected.Nazwa = this.x.Nazwa;
+        scop.zakladkiSelected.ID =this.x.ID;
+        
+
         for (var i = 0; i < scop.zakladki.length; i++) {
             scop.zakladki[i].color = "#d1edff";
         }
         this.x.color = "#ffffff";
+
+        var dataOut = { Nazwa: scop.zakladkiSelected.Nazwa, ID: scop.zakladkiSelected.ID, UserID: scop.User.ID };
+        $.post("konfigBudowa/PostZmieniaZakladke", dataOut, function (data) {
+            scop.bloki = data;
+          
+            scop.$apply();
+        });
 
     };
     scop.funcLeaveRect = function (eventy) {
@@ -74,7 +87,7 @@
 
     scop.Klikniety = function (eventy) { // potwierdzenie dodanie prostokatow
 
-        var dataOut = { x: scop.DataBlokuKliknietego._x, y: scop.DataBlokuKliknietego._y, width: scop.DataBlokuKliknietego._width, height: scop.DataBlokuKliknietego._height, cnt: scop.FormBlok.N, orientacja: scop.FormBlok.Orientacja, ID: scop.DataBlokuKliknietego.ID, UserID: scop.User.ID };
+        var dataOut = { x: scop.DataBlokuKliknietego._x, y: scop.DataBlokuKliknietego._y, width: scop.DataBlokuKliknietego._width, height: scop.DataBlokuKliknietego._height, cnt: scop.FormBlok.N, orientacja: scop.FormBlok.Orientacja, ID: scop.DataBlokuKliknietego.ID, UserID: scop.User.ID, ZakladkaID: scop.zakladkiSelected.ID };
         $.post("konfigBudowa/PostDodajBloki", dataOut, function (data) {
             scop.bloki = data;
             if (scop.Pokazane == true) {
