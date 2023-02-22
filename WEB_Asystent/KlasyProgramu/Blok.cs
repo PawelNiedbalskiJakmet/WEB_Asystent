@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using WEB_Asystent.Global;
 
 
 namespace WEB_Asystent.KlasyProgramu
 {
     public class Blok
     {
-        private static int cnt=0;
+      //  private static int cnt=0;
+        private User uzytkownik;
      //   private static List<Blok> listaTymczasowa = new List<Blok>();
         private double x;
         private double y;
@@ -32,8 +34,9 @@ namespace WEB_Asystent.KlasyProgramu
             szerokosc = _szerokosc;
             wysokosc = _wysokosc;
             parent = _parent;
-            cnt++;
-            id = cnt;
+            uzytkownik = _parent.uzytkownik;
+            uzytkownik.CNT++;
+            id = uzytkownik.CNT;
             if (_parent.Ustawienie == "POZ")
             {
                 x = szerokosc * _nrWKolei + _parent.X;
@@ -48,23 +51,30 @@ namespace WEB_Asystent.KlasyProgramu
             else;
 
         }
-        public Blok(double _szerokosc, double _wysokosc)
+        //public Blok(double _szerokosc, double _wysokosc)
+        //{
+        //    x = 0;
+        //    y = 0;
+        //    szerokosc = _szerokosc;
+        //    wysokosc = _wysokosc;
+        //    cnt++;
+        //    id = cnt;
+        //}
+        public Blok(User _user)
         {
             x = 0;
             y = 0;
-            szerokosc = _szerokosc;
-            wysokosc = _wysokosc;
-            cnt++;
-            id = cnt;
+         
+            szerokosc = 100;
+            wysokosc = 100;
+//id = cnt;
+            uzytkownik = _user; 
+            uzytkownik.CNT++;
+            id = uzytkownik.CNT;
         }
         public Blok()
         {
-            x = 0;
-            y = 0;
-            cnt++;
-            szerokosc = 100;
-            wysokosc = 100;
-            id = cnt;
+
         }
         public void ZmienSzerokosc(double wartoscSzerokosci)
         {
@@ -245,6 +255,15 @@ namespace WEB_Asystent.KlasyProgramu
             }
             
         }
+        public int UserID
+        {
+            get
+            {
+                return uzytkownik.UserID;
+            }
+  
+
+        }
         public double Szerokosc
         {
             get
@@ -258,9 +277,9 @@ namespace WEB_Asystent.KlasyProgramu
 
         }
      
-        public Blok Przeszukaj(int _ID)
+        private Blok Przeszukaj(int _ID, Blok odszukane) // to chyba nie dziala
         {
-            Blok zmienna = this;
+            Blok zmienna=odszukane;// = this;
           //  Blok.cnt--;
             if (bloklist != null)
             {
@@ -273,12 +292,18 @@ namespace WEB_Asystent.KlasyProgramu
                     }
                     else
                     {
-                        _blok.Przeszukaj(_ID);
+                     zmienna=  _blok.Przeszukaj(_ID,odszukane);
 
                     }
                 }
             }
             return zmienna;
+
+        }
+        public Blok Przeszukaj(int _ID)
+        {
+         
+            return ZrobListeDown().Find(x => x.ID == _ID);
 
         }
 
@@ -299,7 +324,7 @@ namespace WEB_Asystent.KlasyProgramu
         //    return zmienna;
 
         //}
-  
+
         public List<Blok> BlokiWewnetrzne
         {
 

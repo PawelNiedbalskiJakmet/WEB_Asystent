@@ -33,11 +33,11 @@
    <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{(svgConfig.margines*1.5)*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" /> 
 
      <line stroke="blue" stroke-width="0.5" ng-attr-x1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*100+svgConfig.obszar*100}}%" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
-    <line stroke="blue" stroke-width="0.5" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" ng-attr-x1="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  /> 
+    <line stroke="blue" stroke-width="0.5" ng-attr-x2="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y2="{{svgConfig.margines*0.5*100}}%" ng-attr-x1="{{(svgConfig.margines*1.5)*100+svgConfig.obszar*100}}%" ng-attr-y1="{{svgConfig.margines*0.5*100+svgConfig.obszar*100}}%"  />
 
 
 
-     <rect   fill="{{x._bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x._x+svgConfig.margines*100}}%"  ng-attr-y="{{x._y+svgConfig.margines*100}}%" ng-attr-width="{{x._width*svgConfig.obszar}}%" ng-attr-height="{{x._height*svgConfig.obszar}}%"/>
+                    <rect fill="{{x._bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x._x*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x._y*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x._width*svgConfig.obszar}}%" ng-attr-height="{{x._height*svgConfig.obszar}}%" />
   
      
 
@@ -92,8 +92,8 @@
        <label class="w_lini">Orientacja</label>
 
        <select  style="color: black;" class="w_lini" id="Id_orient" ng-model="FormBlok.Orientacja">
-  <option style="color: black; font-size: 10px" value="Poz">Poziomo</option>
-  <option style="color: black; font-size: 10px" value="Pion">Pionowo</option>
+  <option style="color: black; font-size: 10px" value="POZ">Poziomo</option>
+  <option style="color: black; font-size: 10px" value="PION">Pionowo</option>
       </select>
 
      </div >

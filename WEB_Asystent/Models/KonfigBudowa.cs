@@ -11,21 +11,23 @@ namespace WEB_Asystent.Models
         public int cnt { get; set; }
         public string orientacja { get; set; }
         public int ID { get; set; }
+             public int UserID { get; set; }
 
-
+        public KonfigBudowa() { }
 
         /// <param name="_blok">obiekt typu blok konwertowany na model</param>
-        public KonfigBudowa konwertujNaModel(Blok _blok)
+        public KonfigBudowa (Blok _blok)
         {
-            var ob_modelu = new KonfigBudowa();
+            
 
-            ob_modelu.ID = _blok.ID;
-            ob_modelu.orientacja = _blok.Ustawienie;
-            ob_modelu.X = _blok.X;
-            ob_modelu.Y = _blok.Y;
-            ob_modelu.Width = _blok.Szerokosc;
-            ob_modelu.Height = _blok.Wysokosc;
-            return ob_modelu;
+            ID = _blok.ID;
+            orientacja = _blok.Ustawienie;
+            X = _blok.X;
+            Y = _blok.Y;
+            Width = _blok.Szerokosc;
+            Height = _blok.Wysokosc;
+            UserID = _blok.UserID;
+         
         }
 
 

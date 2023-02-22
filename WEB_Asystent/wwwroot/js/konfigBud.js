@@ -1,12 +1,12 @@
 ﻿function SvgFunct(scop) {
-    scop.bloki = [{ _x: 0, _y: 0, _width: 100, _height: 100, _bg_color: "white", ID: 1 }];
+    scop.bloki = [{ _x: 0, _y: 0, _width: 100, _height: 100, _bg_color: "white", id: 1 }];
     scop.zakladki = [{ nazwa: "wom", id: 1, color: "#d1edff" }, { nazwa: "pom", id: 2, color: "#d1edff" }];
     scop.Pokazane = false;
     scop.DataBlokuKliknietego = { _x: 0, _y: 0, _width: 0, _height: 0 , ID:0};
-    scop.FormBlok = { N: 2, Orientacja: "Poz" };
+    scop.FormBlok = { N: 2, Orientacja: "POZ" };
     scop.svgConfig = { obszar: 0.8, margines: 0.1 };
     scop.calosc = { glebokosc: 100, szerokosc: 100, wysokosc: 100 };
-
+    scop.User = { imie: "Paweł", nazwisko: "Niedbalski", ID: 1 };
     var stop;
     $("#okno").hide();
     if (scop.zakladki.length >= 1) { // zaznaczanie pierwszej zakladki
@@ -45,8 +45,8 @@
     };
     scop.functionPion = function (eventy) { // kiedy kliknieto rectangle
 
-        scop.FormBlok = { N: 2, Orientacja: "Pion" };
-        scop.DataBlokuKliknietego = { _x: this.x._x, _y: this.x._y, _width: this.x._width, _height: this.x._height, ID: this.x.ID };
+        scop.FormBlok = { N: 2, Orientacja: "PION" };
+        scop.DataBlokuKliknietego = { _x: this.x._x, _y: this.x._y, _width: this.x._width, _height: this.x._height, ID: this.x.id };
         if (scop.Pokazane == false) {
             this.x._bg_color = "#00cf2d";
             $("#okno").show();
@@ -59,8 +59,8 @@
     };
     scop.functionPoz = function (eventy) { // kiedy kliknieto rectangle
 
-        scop.FormBlok = { N: 2, Orientacja: "Poz" };
-        scop.DataBlokuKliknietego = { _x: eventy.target.x.animVal.valueInSpecifiedUnits, _y: eventy.target.y.animVal.valueInSpecifiedUnits, _width: eventy.target.width.animVal.valueInSpecifiedUnits, _height: eventy.target.height.animVal.valueInSpecifiedUnits, ID: this.x.ID };
+        scop.FormBlok = { N: 2, Orientacja: "POZ" };
+        scop.DataBlokuKliknietego = { _x: this.x._x, _y: this.x._y, _width: this.x._width, _height: this.x._height, ID: this.x.id };
         if (scop.Pokazane == false) {
             this.x._bg_color = "#00cf2d";
             $("#okno").show();
@@ -74,13 +74,13 @@
 
     scop.Klikniety = function (eventy) { // potwierdzenie dodanie prostokatow
 
-        var dataOut = { x: scop.DataBlokuKliknietego._x, y: scop.DataBlokuKliknietego._y, width: scop.DataBlokuKliknietego._width, height: scop.DataBlokuKliknietego._height, cnt: scop.FormBlok.N, orientacja: scop.FormBlok.Orientacja, ID: scop.DataBlokuKliknietego.ID };
+        var dataOut = { x: scop.DataBlokuKliknietego._x, y: scop.DataBlokuKliknietego._y, width: scop.DataBlokuKliknietego._width, height: scop.DataBlokuKliknietego._height, cnt: scop.FormBlok.N, orientacja: scop.FormBlok.Orientacja, ID: scop.DataBlokuKliknietego.ID, UserID: scop.User.ID };
         $.post("konfigBudowa/PostDodajBloki", dataOut, function (data) {
-            scop.bloki = data.bloki;
+            scop.bloki = data;
             if (scop.Pokazane == true) {
                 $("#okno").hide();
                 scop.Pokazane = false;
-                scop.FormBlok = { N: 0, Orientacja: "Poz" };
+                scop.FormBlok = { N: 0, Orientacja: "POZ" };
             } //   $scope.model.count++;
             scop.$apply();
         });
