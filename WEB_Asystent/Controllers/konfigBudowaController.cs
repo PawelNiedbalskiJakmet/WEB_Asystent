@@ -92,7 +92,7 @@ namespace WEB_Asystent.Controllers
             }
 
 
-            var doReturn = (IEnumerable<BlokModel>)listaModeli;
+           
 
 
             var doReturn = (IEnumerable<BlokModel>)listaModeli;
