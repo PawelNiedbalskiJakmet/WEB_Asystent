@@ -1,4 +1,6 @@
-﻿namespace WEB_Asystent.KlasyProgramu
+﻿using System.Reflection.Metadata;
+
+namespace WEB_Asystent.KlasyProgramu
 {
     public class Blok
     {
@@ -10,6 +12,9 @@
         private bool ustawionoWymiar = false;
         public bool zablokowanaSzerokosc { get; set; }
         public bool zablokowanaWysokosc { get; set; }
+        public Blok BlokujeWysokosc { get; set; }
+        public Blok BlokujeSzerokosc { get; set; }
+
         //public static List<Blok> OdczytajPotomneBloki(Blok _blok)
         //{
         //    Blok.listaTymczasowa = new List<Blok>();
@@ -25,6 +30,68 @@
         Blok parent;
         string ustawienie = "";
         private int id = 0;
+        public void UsunBlokadeWysokosci(Blok _blok)
+        {
+            if(BlokujeWysokosc==_blok)
+            {
+            zablokowanaWysokosc = false;
+            WskaznikUstawieniaWymiaruPrzezUzytkownika = false;
+                BlokujeWysokosc = null;
+            }
+            foreach(var obiekt in bloklist)
+            {
+                obiekt.UsunBlokadeWysokosci(_blok);
+            }
+           
+        }
+        public void UsunBlokadeSzerokosci(Blok _blok)
+        {
+            if (BlokujeSzerokosc == _blok)
+            {
+                zablokowanaSzerokosc = false;
+                WskaznikUstawieniaWymiaruPrzezUzytkownika = false;
+                BlokujeSzerokosc = null;
+            }
+            foreach (var obiekt in bloklist)
+            {
+                obiekt.UsunBlokadeSzerokosci(_blok);
+            }
+        }
+        public void UsunWiazania()
+        {
+            zablokowanaSzerokosc = false;
+            zablokowanaWysokosc = false;
+            WskaznikUstawieniaWymiaruPrzezUzytkownika = false;
+
+            foreach (var blok in bloklist)
+            {
+                blok.UsunWiazania();
+            }
+        }
+        public void usunGrupe()
+        {
+            if (parent != null)
+            {
+                parent.bloklist.Clear();
+            }
+        }
+        public void usunBlok()
+        {
+            if (parent != null)
+            {
+                if (parent.bloklist.Count > 2)
+                {
+                    parent.bloklist.Remove(this);
+                    parent.updateXY();
+                }
+                else
+                {
+                    parent.bloklist.Clear();
+                }
+
+                // parent.bloklist.Clear();
+            }
+        }
 
         public void updateXY()
         {
@@ -32,7 +99,7 @@
             {
                 bloklist[0].X = X;
                 bloklist[0].Y = Y;
-            //    bloklist[0].updateXY();
+                //    bloklist[0].updateXY();
 
                 var liczbaSzerokosci = liczbaSzerokosciNieZablokowanych();
                 var liczbaWysokosci = liczbaWysokosciNieZablokowanych();
@@ -59,10 +126,10 @@
                             {
                                 bloklist[i].szerokosc = (szerokosc - dlugoscSzerokosci) / liczbaSzerokosci;
                             }
-                            bloklist[i-1].wysokosc = wysokosc;
+                            bloklist[i - 1].wysokosc = wysokosc;
                             bloklist[i].wysokosc = wysokosc;
                             bloklist[i].Y = bloklist[i - 1].Y;
-                        
+
                             break;
                         case "PION":
                             if (bloklist[i - 1].zablokowanaWysokosc)
@@ -85,22 +152,23 @@
                         default:
                             break;
                     }
-                 //   bloklist[i].updateXY();
+                    //   bloklist[i].updateXY();
 
                 }
-                foreach(var blok in bloklist)
+                foreach (var blok in bloklist)
                 {
                     blok.updateXY();
                 }
             }
 
         }
-        public void WstawZablokujSzerokoscDown(double _szerokosc)
+        public void WstawZablokujSzerokoscDown(double _szerokosc, Blok _blok)
         {
             if (!zablokowanaSzerokosc)
             {
                 SzerokoscZew = _szerokosc;
                 zablokowanaSzerokosc = true;
+                BlokujeSzerokosc = _blok;
                 switch (ustawienie)
                 {
                     case "PION":
@@ -112,7 +180,7 @@
                         //zablokowanaSzerokosc = true;
                         foreach (Blok blok in bloklist)
                         {
-                            blok.WstawZablokujSzerokoscDown(_szerokosc);
+                            blok.WstawZablokujSzerokoscDown(_szerokosc, _blok);
                         }
                         //   }
 
@@ -131,7 +199,7 @@
                             {
                                 if (!blok.zablokowanaSzerokosc)
                                 {
-                                    blok.WstawZablokujSzerokoscDown(roznica / liczba);
+                                    blok.WstawZablokujSzerokoscDown(roznica / liczba, _blok);
                                     // blok.zablokowanaSzerokosc = true;
                                 }
 
@@ -170,9 +238,9 @@
             }
 
         }
-        public void WstawZablokujSzerokoscUp(double _szerokosc)
+        public void WstawZablokujSzerokoscUp(double _szerokosc, Blok _blok)
         {
-            WstawZablokujSzerokoscDown(_szerokosc); // zjechanie z blokada w dół
+            WstawZablokujSzerokoscDown(_szerokosc, _blok); // zjechanie z blokada w dół
             if (parent != null) // gdy nie ma rodzica (blok 1 )
             {
                 switch (parent.ustawienie) // sprw ustawienia rodzica
@@ -180,7 +248,7 @@
                     case "PION":
                         if (!parent.zablokowanaSzerokosc)// gdy mozna zmienic szerokosc
                         {
-                            parent.WstawZablokujSzerokoscUp(_szerokosc);
+                            parent.WstawZablokujSzerokoscUp(_szerokosc,_blok);
 
                         }
                         break;
@@ -195,7 +263,7 @@
                                 {
                                     if (!blok.zablokowanaSzerokosc)
                                     {
-                                        blok.WstawZablokujSzerokoscDown(roznica); // dla tego elementu nalezy zablokowac wysokosc
+                                        blok.WstawZablokujSzerokoscDown(roznica, _blok); // dla tego elementu nalezy zablokowac wysokosc
                                     }
                                 }
                             }
@@ -205,7 +273,7 @@
                         {
                             if (liczba == 0)// kiedy parent nie zablokowany to nalezy parenta zablokowac
                             {
-                                parent.WstawZablokujSzerokoscUp(parent.szerokoscZablokowanych());
+                                parent.WstawZablokujSzerokoscUp(parent.szerokoscZablokowanych(), _blok);
                             }
                             else
                             {
@@ -277,9 +345,9 @@
             //}
 
         }
-        public void WstawZablokujWysokoscUp(double _wysokosc)
+        public void WstawZablokujWysokoscUp(double _wysokosc, Blok _blok)
         {
-            WstawZablokujWysokoscDown(_wysokosc); // zjechanie z blokada w dół
+            WstawZablokujWysokoscDown(_wysokosc, _blok); // zjechanie z blokada w dół
             if (parent != null) // gdy nie ma rodzica (blok 1 )
             {
                 switch (parent.ustawienie) // sprw ustawienia rodzica
@@ -295,7 +363,7 @@
                                 {
                                     if (!blok.zablokowanaWysokosc)
                                     {
-                                        blok.WstawZablokujWysokoscDown(roznica); // dla tego elementu nalezy zablokowac wysokosc
+                                        blok.WstawZablokujWysokoscDown(roznica, _blok); // dla tego elementu nalezy zablokowac wysokosc
                                     }
                                 }
                             }
@@ -305,7 +373,7 @@
                         {
                             if (liczba == 0)// kiedy parent nie zablokowany to nalezy parenta zablokowac
                             {
-                                parent.WstawZablokujWysokoscUp(parent.wysokoscZablokowanych());
+                                parent.WstawZablokujWysokoscUp(parent.wysokoscZablokowanych(), _blok);
                             }
                             else
                             {
@@ -316,7 +384,7 @@
                     case "POZ":
                         if (!parent.zablokowanaWysokosc)// gdy mozna zmienic szerokosc
                         {
-                            parent.WstawZablokujWysokoscUp(_wysokosc);
+                            parent.WstawZablokujWysokoscUp(_wysokosc, _blok);
 
                         }
                         break;
@@ -325,10 +393,11 @@
                 }
             }
         }
-        public void WstawZablokujWysokoscDown(double _wysokosc)
+        public void WstawZablokujWysokoscDown(double _wysokosc,Blok _blok)
         {
             WysokoscZew = _wysokosc;
             zablokowanaWysokosc = true;
+            BlokujeWysokosc = _blok;
             switch (ustawienie)
             {
                 case "PION":
@@ -344,7 +413,7 @@
                         {
                             if (!blok.zablokowanaWysokosc)
                             {
-                                blok.WstawZablokujWysokoscDown(roznica / liczba);
+                                blok.WstawZablokujWysokoscDown(roznica / liczba, _blok);
                                 // blok.zablokowanaSzerokosc = true;
                             }
 
@@ -371,7 +440,7 @@
                     //zablokowanaSzerokosc = true;
                     foreach (Blok blok in bloklist)
                     {
-                        blok.WstawZablokujWysokoscDown(_wysokosc);
+                        blok.WstawZablokujWysokoscDown(_wysokosc, _blok);
                     }
                     //   }
                     //  SzerokoscZew = wartoscSzerokosci;
@@ -585,7 +654,7 @@
             WskaznikUstawieniaWymiaruPrzezUzytkownika = true;
             if (!zablokowanaSzerokosc)
             {
-                WstawZablokujSzerokoscUp(wartoscSzerokosci);
+                WstawZablokujSzerokoscUp(wartoscSzerokosci,this);
                 //   parent.ZmienSzerokoscDown(wartoscSzerokosci);
             }
 
@@ -596,7 +665,7 @@
             if (!zablokowanaWysokosc)
             {
 
-                WstawZablokujWysokoscUp(wartoscWysokosci);
+                WstawZablokujWysokoscUp(wartoscWysokosci, this);
                 // parent.ZmienWysokoscDown(wartoscWysokosci);
             }
 
@@ -830,39 +899,95 @@
 
         public void dodajBloki(int _liczba, string _ulozenie)
         {
-            if (_ulozenie == "PION")
+            var dodajGrupe = true;
+            if (parent != null)
             {
-                ustawienie = "PION";
+                if (parent.ustawienie == _ulozenie)
+                {
+                    var iter = parent.bloklist.FindIndex(blok => blok.ID == this.ID);
+
+                    parent.dodajBlok(iter);
+                    parent.updateXY();
+                    dodajGrupe = false;
+                }
+                else
+                {
+                    dodajGrupe = true;
+                }
             }
-            if (_ulozenie == "POZ")
+            else
             {
-                ustawienie = "POZ";
+                dodajGrupe = true;
+            }
+            if (dodajGrupe)
+            {
+                if (_ulozenie == "PION")
+                {
+                    ustawienie = "PION";
+                }
+                if (_ulozenie == "POZ")
+                {
+                    ustawienie = "POZ";
+                }
+
+                bloklist = new List<Blok>();
+
+                for (int i = 0; i < _liczba; i++)
+                {
+                    //  Console.WriteLine(this.ToString());
+                    Blok blok;
+                    switch (ustawienie)
+                    {
+                        case "PION":
+                            blok = new Blok(this, szerokosc, wysokosc / _liczba, i);
+
+                            break;
+                        case "POZ":
+                            blok = new Blok(this, szerokosc / (_liczba), wysokosc, i);
+                            break;
+                        default:
+                            blok = new Blok(this, szerokosc, wysokosc, i);
+                            break;
+
+                    }
+                    // Blok blok = new Blok(this,);
+                    bloklist.Add(blok);
+
+                }
             }
 
-            bloklist = new List<Blok>();
 
-            for (int i = 0; i < _liczba; i++)
+        }
+        private void dodajBlok(int _iter)
+        {
+            Blok blok = new Blok(this, 0, 0, bloklist.Count);
+            bloklist.Insert(_iter, blok);
+            for (int i = 0; i < bloklist.Count; i++)
             {
-                //  Console.WriteLine(this.ToString());
-                Blok blok;
                 switch (ustawienie)
                 {
                     case "PION":
-                        blok = new Blok(this, szerokosc, wysokosc / _liczba, i);
+                        bloklist[i].wysokosc = wysokosc / bloklist.Count;
+                        bloklist[i].szerokosc = szerokosc;
+                        bloklist[i].X = X;
+                        bloklist[i].Y = Y + i * wysokosc / bloklist.Count;
 
                         break;
                     case "POZ":
-                        blok = new Blok(this, szerokosc / (_liczba), wysokosc, i);
+                        bloklist[i].szerokosc = szerokosc / bloklist.Count;
+                        bloklist[i].wysokosc = wysokosc;
+                        bloklist[i].Y = Y;
+                        bloklist[i].X = X + i * szerokosc / bloklist.Count;
                         break;
                     default:
-                        blok = new Blok(this, szerokosc, wysokosc, i);
+
                         break;
 
                 }
-                // Blok blok = new Blok(this,);
-                bloklist.Add(blok);
-
             }
+
+
+
         }
 
         public double X

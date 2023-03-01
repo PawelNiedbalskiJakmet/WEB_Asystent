@@ -11,7 +11,15 @@
     //    scop.user = Wspolne.getUser();
     //    scop.users = Wspolne.getUsers();
     //}
+    if (cook.getObject('usernames', config) != null) {
+        scop.users = cook.getObject('usernames', config);
+        scop.user = scop.users[cook.getObject('username', config).id - 1];
+      
 
+    } else {
+        scop.user = Wspolne.getUser();
+        scop.users = Wspolne.getUsers();
+    }
    // scop.user = Wspolne.getUser();
    // scop.users = Wspolne.getUsers();
 
@@ -21,9 +29,13 @@
   //  scop.ups = cook.getObject('username')
 
     scop.$watch('user', function (newValue, oldValue) {
-        if (newValue !== oldValue) {
-            Wspolne.setUser(newValue);
-            cook.putObject('username', scop.user, { 'expires': date })
+       if (newValue !== oldValue) {
+           Wspolne.setUser(newValue);
+          // if (cook.getObject('username') != null) {
+           cook.remove('username', config);
+           cook.putObject('username', newValue, { 'expires': date, 'path': config.path })
+          // }
+           
         }
     });
 
@@ -32,16 +44,23 @@
     });
 
     var dataOut = {};
-    $.post("Shared/Init", dataOut, function (data) {
-        scop.users = data;
-        if (cook.getObject('username') != null) {
-            scop.user = data[cook.getObject('username').id - 1];
-            cook.putObject('usernames', scop.users, { 'expires': date })
+    $.post("/Shared/Init", dataOut, function (data) {
+
+        if (cook.getObject('username', config) != null) {
+            scop.users = cook.getObject('usernames',config)
+            scop.user = scop.users[cook.getObject('username',config).id - 1];
+           // cook.putObject('usernames', scop.users, { 'expires': date })
           
         } else {
+            scop.users = data;
             scop.user = data[0];
+        //    cook.putObject('usernames', scop.users, { 'expires': date })
+       //     if (cook.getObject('usernames') != null) {
+            cook.remove('usernames', config);
+            cook.putObject('usernames', scop.users, { 'expires': date, 'path': config.path })
+        //    }
         }
-        scop.$apply();
+     //   scop.$apply();
     });
 
    

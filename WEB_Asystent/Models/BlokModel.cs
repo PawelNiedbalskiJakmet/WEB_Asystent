@@ -24,6 +24,14 @@ namespace WEB_Asystent.Models
         public bool zablokowanaszerokosc { get; set; }
         public bool zablokowanawysokosc { get; set; }
 
+        public bool wprowadzonoblokadewysokosci  { get; set; }
+        public bool wprowadzonoblokadeszerokosci { get; set; }
+
+        public int blokujeszerokosc { get; set  ; }
+        public int blokujewysokosc { get; set; }
+
+        public bool oznaczone { get; set; }
+
 
 
         public BlokModel()
@@ -68,6 +76,41 @@ namespace WEB_Asystent.Models
             zablokowanawysokosc = _blok.zablokowanaWysokosc;
             bg_color = "white";
             id = _blok.ID;
+
+            if(_blok==_blok.BlokujeSzerokosc)
+            {
+                wprowadzonoblokadeszerokosci = true;
+            }
+            else
+            {
+                wprowadzonoblokadeszerokosci = false;
+            }
+
+            if (_blok == _blok.BlokujeWysokosc)
+            {
+                wprowadzonoblokadewysokosci = true;
+            }
+            else
+            {
+                wprowadzonoblokadewysokosci = false;
+            }
+            if (_blok.BlokujeSzerokosc != null)
+            {
+                blokujeszerokosc = _blok.BlokujeSzerokosc.ID;
+            }
+            else
+            {
+                blokujeszerokosc = -1;
+            }
+            if (_blok.BlokujeWysokosc != null)
+            {
+                blokujewysokosc = _blok.BlokujeWysokosc.ID;
+            }
+            else
+            {
+                blokujewysokosc = -1;
+            }
+
 
         }
 

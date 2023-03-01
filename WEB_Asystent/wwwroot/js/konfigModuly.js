@@ -26,7 +26,7 @@
 
         var dataOut = { imie: Wspolne.getUser().imie, nazwisko: Wspolne.getUser().nazwisko, id: Wspolne.getUser().id }
         if (dataOut.id > 0) {
-            $.post("konfigModuly/PostUpdateUser", dataOut, function (data) {
+            $.post("/konfigModuly/PostUpdateUser", dataOut, function (data) {
                 scop.user = data;
                 scop.user.zakladki[0].color = "#ffffff";
                 scop.user.zakladkiselected = scop.user.zakladki[0];
@@ -66,7 +66,7 @@
         var dataOut = scop.user;
 
 
-        $.post("konfigModuly/PostZmieniaZakladke", dataOut, function (data) {
+        $.post("/konfigModuly/PostZmieniaZakladke", dataOut, function (data) {
             scop.user.zakladkiselected.bloki = data;
 
             scop.$apply();
@@ -129,7 +129,7 @@
      //   scop.updateUser();
     //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
         var dataOut = scop.user;
-        $.post("konfigModuly/PostDodajBloki", dataOut, function (data) {
+        $.post("/konfigModuly/PostDodajBloki", dataOut, function (data) {
             scop.user.zakladkiselected.bloki = data;
             if (scop.Pokazane == true) {
                 $("#okno").hide();

@@ -9,9 +9,18 @@ namespace WEB_Asystent.Controllers
     {
         // GET: konfigBudowaController
         //   static  Blok Podstawa=new Blok();
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var obiekt = new UserModel(globalne.Uzytkownicy[0]);
+            //foreach (var zakladka in globalne.Uzytkownicy[id].ListyZakladek)
+            //{
+            //    zakladka.Blok.UsunWiazania();
+            //    zakladka.Blok.WstawZablokujSzerokoscDown(zakladka.szerokosc);
+            //    zakladka.Blok.WstawZablokujWysokoscDown(zakladka.wysokosc);
+            //    zakladka.Blok.updateXY();
+            //}
+
+            //var obiekt = new UserModel(globalne.Uzytkownicy[id]);
+            var obiekt = new UserModel(globalne.Uzytkownicy[id]);
 
             return View(obiekt);
         }
@@ -54,14 +63,14 @@ namespace WEB_Asystent.Controllers
                 if (zakladka.szerokosc > 0) // kiedy cos ustawiono wtedy mozemy zablokowac szerokosc
                 {
                     // zakladka.Blok.SzerokoscZew = zakladka.szerokosc;
-                    zakladka.Blok.WstawZablokujSzerokoscDown(zakladka.szerokosc);
+                    zakladka.Blok.WstawZablokujSzerokoscDown(zakladka.szerokosc, zakladka.Blok);
 
 
                 }
                 if (zakladka.wysokosc > 0) // kiedy cos ustawiono wtedy mozemy zablokowac wysokosc
                 {
                     //  zakladka.Blok.WysokoscZew = zakladka.wysokosc;
-                    zakladka.Blok.WstawZablokujWysokoscDown(zakladka.wysokosc);
+                    zakladka.Blok.WstawZablokujWysokoscDown(zakladka.wysokosc, zakladka.Blok);
                 }
 
                 //    zakladka.Blok.WysokoscZew = zakladka.wysokosc;
@@ -124,6 +133,41 @@ namespace WEB_Asystent.Controllers
 
                 var wyszukany = podstawa.Przeszukaj(data.datablokukliknietego.id);
                 wyszukany.dodajBloki(data.formblok.n, data.formblok.orientacja);
+
+
+                var obiektowa = podstawa.ZrobListeDown();
+
+
+                foreach (var obiekt in obiektowa)
+                {
+                    var modelObiekt = new BlokModel(obiekt);
+                    listaModeli.Add(modelObiekt);
+                }
+
+                //  JsonConvert.SerializeObject(products, Formatting.Indented);
+            }
+
+
+
+            var doReturn = (IEnumerable<BlokModel>)listaModeli;
+
+            return Json(doReturn);
+        }
+        [HttpPost]
+        public JsonResult PostUsunGrupe(UserModel data) // dodanie nowego bloku do zakladki do uzytkownika
+        {
+            var listaModeli = new List<BlokModel>();
+            // test here!
+            if (data != null)
+            {
+                //data.UserID= data.UserID;
+                var podstawa = globalne.Uzytkownicy.Find(x => x.UserID == data.id).ListyZakladek.Find(y => y.ZakladkaID == data.zakladkiselected.id).Blok;
+
+                var wyszukany = podstawa.Przeszukaj(data.datablokukliknietego.id);
+                //   wyszukany.dodajBloki(data.formblok.n, data.formblok.orientacja);
+                // usuwanie grupy
+                wyszukany.usunBlok();
+
 
                 var obiektowa = podstawa.ZrobListeDown();
 
