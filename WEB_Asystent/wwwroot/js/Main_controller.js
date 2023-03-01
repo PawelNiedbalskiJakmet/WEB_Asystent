@@ -1,20 +1,22 @@
 ﻿
 
 
-
+var config = {
+    path: '/'
+};
 
 var ob = angular.module('app', ['ngCookies']);
 
-ob.factory('Wspolne', function () { // serwis ktory zawiera dane ogolnodostepne dla kontrolerow
-   var  user= {
-        imie: "N",
-        nazwisko: "N",
-                id: 0
+ob.factory('Wspolne', function ($cookies) { // serwis ktory zawiera dane ogolnodostepne dla kontrolerow
+    var user = {
+        imie: ($cookies.getObject('username', config) != null) ? $cookies.getObject('username', config).imie : "N",
+        nazwisko: ($cookies.getObject('username', config) != null) ? $cookies.getObject('username', config).nazwisko : "N",
+        id: ($cookies.getObject('username', config) != null) ? $cookies.getObject('username', config).id : 1
     };
    var users= [{
-        imie: "N",
-        nazwisko: "N",
-        id: 0
+       imie: ($cookies.getObject('username', config) != null) ? $cookies.getObject('username', config).imie : "N",
+       nazwisko: ($cookies.getObject('username', config) != null) ? $cookies.getObject('username', config).nazwisko : "N",
+       id: ($cookies.getObject('username', config) != null) ? $cookies.getObject('username', config).id : 1
     }];
     var panel = -1;
     var listaDisable = [];
@@ -77,6 +79,12 @@ ob.controller('CtrlUser', function ($scope, Wspolne, $cookies) {
     
 });
 ob.controller('CtrlPanelKonfigBud', function ($scope, Wspolne, $cookies) {
+    $scope.title = 'controller4';
+
+    PanelKonfigBudFunct($scope, Wspolne);
+
+});
+ob.controller('CtrlPanelKonfigRozmiar', function ($scope, Wspolne, $cookies) {
     $scope.title = 'controller4';
 
     PanelKonfigBudFunct($scope, Wspolne);

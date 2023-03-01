@@ -37,7 +37,7 @@
 
 
                     
-                    <rect fill="{{ x.wprowadzonowymiar ? '#9fff9f' : x.bg_color}}"  stroke="blue" stroke-width="0.5" ng-repeat="x in user.zakladkiselected.bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x.width_display*svgConfig.obszar}}%" ng-attr-height="{{x.height_display*svgConfig.obszar}}%" />
+                    <rect fill="{{ x.wprowadzonowymiar ? '#9fff9f' : x.bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in user.zakladkiselected.bloki" ng-click="functionKliknietoBlok($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x.width_display*svgConfig.obszar}}%" ng-attr-height="{{x.height_display*svgConfig.obszar}}%" />
                     <text ng-if="x.czyrealny==1" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100+x.width_display*svgConfig.obszar/2}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100+x.height_display*svgConfig.obszar/2}}%" fill="{{ x.zablokowanawysokosc ? '#959595' : '#0032ff'}}" ng-repeat="x in user.zakladkiselected.bloki">{{"W: " +x.height_zew.toFixed(0)+" ("+x.height_wew.toFixed(0)+")"}}</text>
                     <text ng-if="x.czyrealny==1" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100+x.width_display*svgConfig.obszar/2}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100+1+x.height_display*svgConfig.obszar/2}}%" fill="{{ x.zablokowanaszerokosc ? '#959595' : '#0032ff'}}" ng-repeat="x in user.zakladkiselected.bloki">{{"S: " +x.width_zew.toFixed(0)+" ("+x.width_wew.toFixed(0)+")"}}</text>
 
@@ -45,6 +45,9 @@
                     <text ng-if="1==1" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100+x.width_display*svgConfig.obszar/2}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100+1+x.height_display*svgConfig.obszar/2}}%" fill="{{ x.zablokowanaszerokosc ? 'red' : '#7c73e9'}}" ng-repeat="x in user.zakladkiselected.bloki">{{"S: " +x.width_zew+" ("+x.width_wew+")"}}</text>
 *@
 
+                    @*<text ng-if="1==1" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100+x.width_display*svgConfig.obszar/2}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100+x.height_display*svgConfig.obszar/2}}%" fill="{{ x.zablokowanawysokosc ? 'red' : '#7c73e9'}}"  ng-repeat="x in user.zakladkiselected.bloki">{{"W: " +x.height_zew+" ("+x.height_wew+")"}}</text>
+                    <text ng-if="1==1" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100+x.width_display*svgConfig.obszar/2}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100+1+x.height_display*svgConfig.obszar/2}}%" fill="{{ x.zablokowanaszerokosc ? 'red' : '#7c73e9'}}" ng-repeat="x in user.zakladkiselected.bloki">{{"S: " +x.width_zew+" ("+x.width_wew+")"}}</text>
+*@
 
          
 
@@ -58,11 +61,11 @@
                             </div>
                             <div class="linia_form">
                                 <label class="w_lini">Wysokość:</label>
-                                <input style="color: black;" type="number" class="w_lini" value="0"  ng-model="user.formblok.wysokosc">
+                                <input style="color: black;" type="number" class="w_lini" value="0" ng-init="user.formblok.wysokosc=0" ng-model="user.formblok.wysokosc">
                             </div>
                             <div class="linia_form">
                                 <label class="w_lini">Szerokość:</label>
-                                <input style="color: black;" type="number" class="w_lini" value="0"  ng-model="user.formblok.szerokosc">
+                                <input style="color: black;" type="number" class="w_lini" value="0" ng-init="user.formblok.szerokosc=0" ng-model="user.formblok.szerokosc">
                             </div>
                             <div class="w_lini">
                                 <button id="svg_id_ok" style="width: 100%;height: 10px;" ng_click="Klikniety($event)"> Potwierdz </button>
@@ -83,23 +86,24 @@
     </div>
 
 </div>
-<div class="pasekPaneluKontrolnego" ng-controller="CtrlPanelKonfigBud">
+<div class="pasekPaneluKontrolnego" ng-controller="CtrlPanelKonfigRozmiar">
     <a asp-area="" asp-controller="konfigRozmiar" asp-action="Index">
         <div class="Panel_dodaj">
-            <img src="Dodawanie.png" style="  width: 62px; margin: 1.6px">
+            <img src="~/Dodawanie.png" style="  width: 62px; margin: 1.6px">
         </div>
     </a>
 
     <div>
-        <a asp-area="" asp-controller="konfigBudowa" asp-action="Index">
+     @*   <a asp-area="" asp-controller="konfigBudowa" asp-action="Index">*@
+            <a href="{{'/konfigBudowa/index/'+user.id}}">
             <div class="Panel_lewo_prawo">
 
-                <img src="Strzalka2.png" style="  width: 35px; margin: 1.6px">
+                <img src="~/Strzalka2.png" style="  width: 35px; margin: 1.6px">
             </div>
         </a>
         <a asp-area="" asp-controller="konfigModuly" asp-action="Index">
             <div class="Panel_lewo_prawo">
-                <img src="Strzalka.png" style="  width: 35px; margin: 1.6px">
+                <img src="~/Strzalka.png" style="  width: 35px; margin: 1.6px">
             </div>
         </a>
     </div>

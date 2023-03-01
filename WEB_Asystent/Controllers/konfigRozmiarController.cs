@@ -5,10 +5,18 @@ namespace WEB_Asystent.Controllers
 {
     public class konfigRozmiarController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var obiekt = new UserModel(globalne.Uzytkownicy[0]);
+            //var obiekt = new UserModel(globalne.Uzytkownicy[0]);
+            foreach (var zakladka in globalne.Uzytkownicy[id].ListyZakladek)
+            {
+                zakladka.Blok.UsunWiazania();
+                zakladka.Blok.WstawZablokujSzerokoscDown(zakladka.szerokosc);
+                zakladka.Blok.WstawZablokujWysokoscDown(zakladka.wysokosc);
+                zakladka.Blok.updateXY();
+            }
 
+            var obiekt = new UserModel(globalne.Uzytkownicy[id]);
             return View(obiekt);
         }
 

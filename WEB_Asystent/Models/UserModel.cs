@@ -19,6 +19,10 @@
             nazwisko = _user.Nazwisko;
             id = _user.UserID;
 
+            formblok = new FormModel();
+            formblok.szerokosc = 0;
+            formblok.wysokosc = 0;
+
             List<ZakladkaModel> listaZakladek = new List<ZakladkaModel>();
 
 

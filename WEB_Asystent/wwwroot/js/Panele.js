@@ -1,27 +1,16 @@
 ﻿function PanelKonfigBudFunct(scop, Wspolne) {
 
+    scop.user = { id: 0 };
 
-    //$.post("Shared/Init", dataOut, function (data) {
-    //    scop.users = data;
-    //    scop.user = data[0];
-    //});
 
-    //scop.user = Wspolne.getUser();
-    //scop.users = Wspolne.getUsers();
+    scop.$watch(function () { return Wspolne.getUser(); }, function (newValue, oldValue) { // odczytanie aktualnego usera
+        //    if (newValue.id !== oldValue.id) {
 
-    //scop.$watch('user', function (newValue, oldValue) {
-    //    if (newValue !== oldValue) Wspolne.setUser(newValue);
-    //});
+        scop.user.id = newValue.id-1;
 
-    //scop.$watch('users', function (newValue, oldValue) {
-    //    if (newValue !== oldValue) Wspolne.setUsers(newValue);
-    //});
+    });
 
-    //var dataOut = {};
-    //$.post("Shared/Init", dataOut, function (data) {
-    //    scop.users = data;
-    //    scop.user = data[0];
-    //});
+
 
 
 }

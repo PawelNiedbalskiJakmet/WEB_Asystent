@@ -9,7 +9,10 @@
     scop.myInit = function (val) {
         Wspolne.setPanelBoczny(1);
         Wspolne.setPanelListaDis([0, 0, 1, 1]);
+
+
         scop.user = val;
+        scop.user.formblok = { n: 2, orientacja: "PION" };
         scop.user.imie = Wspolne.getUser().imie;
         scop.user.nazwisko = Wspolne.getUser().nazwisko;
         scop.user.id = Wspolne.getUser().id;
@@ -23,7 +26,7 @@
         //   scop.updateUser();
         //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
         var dataOut = scop.user;
-        $.post("konfigBudowa/PostUpdateWymiaryCalosci", dataOut, function (data) {
+        $.post("/konfigBudowa/PostUpdateWymiaryCalosci", dataOut, function (data) {
        
         });
     };
@@ -38,7 +41,7 @@
 
         var dataOut = { imie: Wspolne.getUser().imie, nazwisko: Wspolne.getUser().nazwisko, id: Wspolne.getUser().id }
         if (dataOut.id > 0) {
-            $.post("konfigBudowa/PostUpdateUser", dataOut, function (data) {
+            $.post("/konfigBudowa/PostUpdateUser", dataOut, function (data) {
                 scop.user = data;
                 scop.user.zakladki[0].color = "#ffffff";
                 scop.user.zakladkiselected = scop.user.zakladki[0];
@@ -51,7 +54,7 @@
     });
 
     scop.Pokazane = false;
-    scop.svgConfig = { obszar: 0.8, margines: 0.1 };
+    scop.svgConfig = { obszar: 0.9, margines: 0.05 };
     scop.calosc = { glebokosc: 100, szerokosc: 100, wysokosc: 100 };
    
 
@@ -78,7 +81,7 @@
         var dataOut = scop.user;
 
 
-        $.post("konfigBudowa/PostZmieniaZakladke", dataOut, function (data) {
+        $.post("/konfigBudowa/PostZmieniaZakladke", dataOut, function (data) {
             scop.user.zakladkiselected.bloki = data;
 
             scop.$apply();
@@ -86,15 +89,7 @@
 
     };
 
-    scop.funcLeaveRect = function (eventy) {
-/*        this.x._bg_color = "white";*/
-  
-    };
-    scop.funcEnterRect = function (eventy) {
 
-    /*    this.x._bg_color = "#00992185";*/
-
-    };
 
     scop.hideForm = function (eventy) { // schowanie okienka
 
@@ -112,46 +107,151 @@
 
     scop.functionPion = function (eventy) { // kiedy kliknieto rectangle
 
-        scop.user.formblok = { n: 2, orientacja: "PION" };
-        scop.user.datablokukliknietego = { x_display: this.x.x_display, y_display: this.x.y_display, width_display: this.x.width_display, height_display: this.x.height_display, id: this.x.id, bg_color: this.x.bg_color };
-        if (scop.Pokazane == false) {
-            this.x.bg_color = "#00cf2d";
-            $("#okno").show();
-            scop.Pokazane = true;
+        //scop.user.formblok = { n: 2, orientacja: "PION" };
+        //scop.user.datablokukliknietego = { x_display: this.x.x_display, y_display: this.x.y_display, width_display: this.x.width_display, height_display: this.x.height_display, id: this.x.id, bg_color: this.x.bg_color };
+        //if (scop.Pokazane == false) {
+        //    this.x.bg_color = "#00cf2d";
+        //    $("#okno").show();
+        //    scop.Pokazane = true;
 
-        }
+        //}
 
 
     };
     scop.functionPoz = function (eventy) { // kiedy kliknieto rectangle
 
-        scop.user.formblok = { n: 2, orientacja: "POZ" };
-        scop.user.datablokukliknietego = { x_display: this.x.x_display, y_display: this.x.y_display, width_display: this.x.width_display, height_display: this.x.height_display, id: this.x.id, bg_color: this.x.bg_color };
-        if (scop.Pokazane == false) {
-            this.x.bg_color = "#00cf2d";
-            $("#okno").show();
-            scop.Pokazane = true;
+        //scop.user.formblok = { n: 2, orientacja: "POZ" };
+        //scop.user.datablokukliknietego = { x_display: this.x.x_display, y_display: this.x.y_display, width_display: this.x.width_display, height_display: this.x.height_display, id: this.x.id, bg_color: this.x.bg_color };
+        //if (scop.Pokazane == false) {
+        //    this.x.bg_color = "#00cf2d";
+        //    $("#okno").show();
+        //    scop.Pokazane = true;
 
+        //}
+
+
+    };
+
+    scop.WcisniecieKlawisza = function (event) {
+        if (event.keyCode == 8) {   // '13' is the key code for enter
+            //   var i = this.x.id;
+            //     this.x.id;
+            var dataOut = { id: scop.user.id, formblok: scop.user.formblok, datablokukliknietego: { id: this.x.id }, zakladkiselected: { id: scop.user.zakladkiselected.id } };
+
+            //  var dataOut = scop.user;
+            $.post("/konfigBudowa/PostUsunGrupe", dataOut, function (data) {
+                scop.user.zakladkiselected.bloki = data;
+                if (scop.Pokazane == true) {
+                //    $("#okno").hide();
+                 //   scop.Pokazane = false;
+                //    scop.user.formblok = { n: 2, orientacja: "POZ" };
+                } //   $scope.model.count++;
+                scop.$apply();
+            });
         }
+//scop.user.formblok = { n: 2, orientacja: "PION" };
+        if (event.keyCode == 86) {   // vertical
+            scop.user.formblok = { n: 2, orientacja: "POZ" };
+            scop.user.formblok.n = 2;
+            scop.user.datablokukliknietego = { x_display: this.x.x_display, y_display: this.x.y_display, width_display: this.x.width_display, height_display: this.x.height_display, bg_color: this.x.width, id: this.x.id };
+            //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
+            var dataOut = { id: scop.user.id, formblok: scop.user.formblok, datablokukliknietego: { id: scop.user.datablokukliknietego.id }, zakladkiselected: { id: scop.user.zakladkiselected.id } };
 
+            //  var dataOut = scop.user;
+            $.post("/konfigBudowa/PostDodajBloki", dataOut, function (data) {
+                scop.user.zakladkiselected.bloki = data;
+                // scop.user.formblok = { n: 2, orientacja: "POZ" };
+                if (scop.Pokazane == true) {
+                    //  $("#okno").hide();
+                    // scop.Pokazane = false;
+                    //  scop.user.formblok = { n: 2, orientacja: "POZ" };
+                } //   $scope.model.count++;
+                scop.$apply();
+            });
+        }
+        if (event.keyCode == 72) {   // horisontal
+            scop.user.formblok = { n: 2, orientacja: "PION" };
+            scop.user.formblok.n = 2;
+            scop.user.datablokukliknietego = { x_display: this.x.x_display, y_display: this.x.y_display, width_display: this.x.width_display, height_display: this.x.height_display, bg_color: this.x.width, id: this.x.id };
+            //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
+            var dataOut = { id: scop.user.id, formblok: scop.user.formblok, datablokukliknietego: { id: scop.user.datablokukliknietego.id }, zakladkiselected: { id: scop.user.zakladkiselected.id } };
 
-    };
+            //  var dataOut = scop.user;
+            $.post("/konfigBudowa/PostDodajBloki", dataOut, function (data) {
+                scop.user.zakladkiselected.bloki = data;
+                // scop.user.formblok = { n: 2, orientacja: "POZ" };
+                if (scop.Pokazane == true) {
+                    //  $("#okno").hide();
+                    // scop.Pokazane = false;
+                    //  scop.user.formblok = { n: 2, orientacja: "POZ" };
+                } //   $scope.model.count++;
+                scop.$apply();
+            });
+      
+        }
+        
+    }
+    //scop.Kasowanie = function (event) {
 
-    scop.Klikniety = function (eventy) { // potwierdzenie dodanie prostokatow
-        //   scop.updateUser();
-        //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
-        var dataOut = { id: scop.user.id, formblok: scop.user.formblok, datablokukliknietego: { id: scop.user.datablokukliknietego.id }, zakladkiselected: { id: scop.user.zakladkiselected.id } };
+    //    var dataOut = { id: scop.user.id, formblok: scop.user.formblok, datablokukliknietego: { id: scop.user.datablokukliknietego.id }, zakladkiselected: { id: scop.user.zakladkiselected.id } };
+
+    //    //  var dataOut = scop.user;
+    //    //$.post("/konfigBudowa/PostUsunGrupe", dataOut, function (data) {
+    //    //    scop.user.zakladkiselected.bloki = data;
+    //    //    if (scop.Pokazane == true) {
+    //    //        $("#okno").hide();
+    //    //        scop.Pokazane = false;
+    //    //        scop.user.formblok = { n: 2, orientacja: "POZ" };
+    //        } //   $scope.model.count++;
+    //        scop.$apply();
+    //    });
+
+    //}
+
+    //scop.Klikniety = function (eventy) { // potwierdzenie dodanie prostokatow
+    //    //   scop.updateUser();
+    //    scop.user.formblok.n = 2;
+    //    scop.user.datablokukliknietego = { x_display: this.x.x_display, y_display: this.x.y_display, width_display: this.x.width_display, height_display: this.x.height_display, bg_color: this.x.width, id: this.x.id };
+    //    //    var dataOut = { x: scop.DataBlokuKliknietego.x, y: scop.DataBlokuKliknietego.y, width: scop.DataBlokuKliknietego.width, height: scop.DataBlokuKliknietego.height, cnt: scop.FormBlok.n, orientacja: scop.FormBlok.orientacja, id: scop.DataBlokuKliknietego.id, userid: scop.user.id, zakladkaid: scop.zakladkiselected.id };
+    //    var dataOut = { id: scop.user.id, formblok: scop.user.formblok, datablokukliknietego: { id: scop.user.datablokukliknietego.id }, zakladkiselected: { id: scop.user.zakladkiselected.id } };
     
-      //  var dataOut = scop.user;
-        $.post("konfigBudowa/PostDodajBloki", dataOut, function (data) {
-            scop.user.zakladkiselected.bloki = data;
-            if (scop.Pokazane == true) {
-                $("#okno").hide();
-                scop.Pokazane = false;
-                scop.user.formblok = { n: 0, orientacja: "POZ" };
-            } //   $scope.model.count++;
-            scop.$apply();
-        });
-    };
+    //  //  var dataOut = scop.user;
+    //    $.post("/konfigBudowa/PostDodajBloki", dataOut, function (data) {
+    //        scop.user.zakladkiselected.bloki = data;
+    //       // scop.user.formblok = { n: 2, orientacja: "POZ" };
+    //        if (scop.Pokazane == true) {
+    //          //  $("#okno").hide();
+    //           // scop.Pokazane = false;
+    //          //  scop.user.formblok = { n: 2, orientacja: "POZ" };
+    //        } //   $scope.model.count++;
+    //        scop.$apply();
+    //    });
+    //};
 
+    scop.funcMouseOver = function (event) {
+        if (!scop.Pokazane) {
+            $(event.target).focus();
+            //   this.x.oznaczone = true;
+        } else {
+            this.x.oznaczone = false;
+        }
+        
+    }
+    scop.funcMouseEnter = function (event) {
+        if (!scop.Pokazane) {
+            this.x.oznaczone = true;
+         //   scop.datablokukliknietego.id = this.x;
+            //   this.x.oznaczone = true;
+        } else {
+            this.x.oznaczone = false;
+        }
+    }
+    scop.funcMouseLeave = function (event) {
+        if (!scop.Pokazane) {
+            this.x.oznaczone = false;
+            //   this.x.oznaczone = true;
+        } else {
+            this.x.oznaczone = false;
+        }
+    }
 }

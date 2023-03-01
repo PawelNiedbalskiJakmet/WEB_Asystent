@@ -39,7 +39,7 @@
 
 
 
-                    <rect fill="{{x.bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in user.zakladkiselected.bloki" ng-click="functionPion($event)" ng-dblclick="functionPoz($event)" ng-mouseleave="funcLeaveRect($event)" ng-mouseenter="funcEnterRect($event)" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x.width_display*svgConfig.obszar}}%" ng-attr-height="{{x.height_display*svgConfig.obszar}}%" />
+                    <rect class="prostokat" tabindex="1" ng-keydown="WcisniecieKlawisza($event)" fill=" {{x.oznaczone? '#00cf2d' : x.bg_color}}" stroke="blue" stroke-width="0.5" ng-repeat="x in user.zakladkiselected.bloki" ng-click="Klikniety($event)" ng-mouseover="funcMouseOver($event)" ng-mouseleave="funcMouseLeave($event)" ng-mouseenter="funcMouseEnter($event)" ng-attr-x="{{x.x_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-y="{{x.y_display*svgConfig.obszar+svgConfig.margines*100}}%" ng-attr-width="{{x.width_display*svgConfig.obszar}}%" ng-attr-height="{{x.height_display*svgConfig.obszar}}%" />
   
      
 
@@ -98,15 +98,22 @@
   <option style="color: black; font-size: 10px" value="PION">Pionowo</option>
       </select>
 
-     </div >
+                            </div> 
+                            <div class="linia_form">
+                            <div class="w_lini">
+                                    <button id="svg_id_usun" style="width: 100px;height: 10px;background-color: orange;" ng_click="Kasowanie($event)"> Usuń </button>
+                            </div> 
+                            </div>
+
          <div class="w_lini">
-     <button id="svg_id_ok" style="width: 100%;height: 10px;" ng_click="Klikniety($event)"> Potwierdz </button>
+                                <button id="svg_id_ok" style="width: 50px;height: 10px;" ng_click="Klikniety($event)"> Potwierdz </button>
 
      </div>
         <div class="w_lini">
-     <button id="svg_id_anuluj" ng-click="hideForm($event)" style="width: 100%;height: 10px; background-color: #fb2f2f;"> Anuluj </button>
+                                <button id="svg_id_anuluj" ng-click="hideForm($event)" style="width: 50px; height: 10px; background-color: #fb2f2f;"> Anuluj </button>
 
      </div>
+                           
     </div>
   </foreignObject>
 
@@ -121,7 +128,7 @@
 <div class="pasekPaneluKontrolnego" ng-controller="CtrlPanelKonfigBud">
     <a asp-area="" asp-controller="konfigRozmiar" asp-action="Index">
     <div class="Panel_dodaj">
-            <img src="Dodawanie.png" style="  width: 62px; margin: 1.6px">
+            <img src="/Dodawanie.png" style="  width: 62px; margin: 1.6px">
     </div>
     </a>
 
@@ -129,12 +136,13 @@
         <a @*asp-area="" asp-controller="Home" asp-action="Index"*@>
         <div class="Panel_lewo_prawo">
           
-                <img src="Strzalka2.png" style="  width: 35px; margin: 1.6px">
+                <img src="/Strzalka2.png" style="  width: 35px; margin: 1.6px">
         </div>
         </a>
-        <a asp-area="" asp-controller="konfigRozmiar" asp-action="Index">
+    @*    <a asp-area="" asp-controller="konfigRozmiar" asp-action="Index"> *@
+        <a href="{{'/konfigRozmiar/index/'+user.id}}">
         <div class="Panel_lewo_prawo">
-                <img src="Strzalka.png" style="  width: 35px; margin: 1.6px">
+                <img src="/Strzalka.png" style="  width: 35px; margin: 1.6px">
         </div>
         </a>
     </div>

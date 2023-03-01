@@ -23,6 +23,7 @@ namespace WEB_Asystent.Models
 
         public bool zablokowanaszerokosc { get; set; }
         public bool zablokowanawysokosc { get; set; }
+        public bool oznaczone { get; set; }
 
 
 
