@@ -12,6 +12,9 @@
             _user.UserID = 1;
 
             _user.DodajZakladke("wom-numer");
+            _user.ListyZakladek[0].Blok.dodajBloki(5, "PION");
+            _user.ListyZakladek[0].Blok.BlokiWewnetrzne[0].dodajBloki(5, "POZ");
+            _user.ListyZakladek[0].Blok.BlokiWewnetrzne[0].BlokiWewnetrzne[0].dodajBloki(2, "PION");
             _user.DodajZakladke("pom-numer");
 
             //  _user.Blok = new Blok(_user);

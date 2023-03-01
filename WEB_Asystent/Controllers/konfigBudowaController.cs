@@ -51,8 +51,20 @@ namespace WEB_Asystent.Controllers
                 zakladka.wysokosc = data.zakladkiselected.calosc.wysokosc;
                 zakladka.glebokosc = data.zakladkiselected.calosc.glebokosc;
 
-                zakladka.Blok.SzerokoscZew = zakladka.szerokosc;
-                zakladka.Blok.WysokoscZew = zakladka.wysokosc;
+                if (zakladka.szerokosc > 0) // kiedy cos ustawiono wtedy mozemy zablokowac szerokosc
+                {
+                    // zakladka.Blok.SzerokoscZew = zakladka.szerokosc;
+                    zakladka.Blok.WstawZablokujSzerokoscDown(zakladka.szerokosc);
+
+
+                }
+                if (zakladka.wysokosc > 0) // kiedy cos ustawiono wtedy mozemy zablokowac wysokosc
+                {
+                    //  zakladka.Blok.WysokoscZew = zakladka.wysokosc;
+                    zakladka.Blok.WstawZablokujWysokoscDown(zakladka.wysokosc);
+                }
+
+                //    zakladka.Blok.WysokoscZew = zakladka.wysokosc;
 
                 doReturn = new wymiary(zakladka.szerokosc, zakladka.wysokosc, zakladka.glebokosc);
 
@@ -92,7 +104,7 @@ namespace WEB_Asystent.Controllers
             }
 
 
-           
+
 
 
             var doReturn = (IEnumerable<BlokModel>)listaModeli;

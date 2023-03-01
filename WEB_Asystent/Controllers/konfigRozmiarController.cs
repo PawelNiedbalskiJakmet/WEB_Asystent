@@ -88,7 +88,7 @@ namespace WEB_Asystent.Controllers
                     wyszukany.ZmienWysokosc(data.formblok.wysokosc);
                 }
 
-
+                podstawa.updateXY();
 
                 var obiektowa = podstawa.ZrobListeDown();
 
@@ -110,7 +110,7 @@ namespace WEB_Asystent.Controllers
         }
 
         // GET: konfigBudowaController/Create
- 
-       
+
+
     }
 }

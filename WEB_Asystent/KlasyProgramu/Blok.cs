@@ -25,6 +25,368 @@
         Blok parent;
         string ustawienie = "";
         private int id = 0;
+
+        public void updateXY()
+        {
+            if (bloklist.Count > 0)
+            {
+                bloklist[0].X = X;
+                bloklist[0].Y = Y;
+            //    bloklist[0].updateXY();
+
+                var liczbaSzerokosci = liczbaSzerokosciNieZablokowanych();
+                var liczbaWysokosci = liczbaWysokosciNieZablokowanych();
+                var dlugoscSzerokosci = szerokoscZablokowanychDisplay();
+                var dlugoscWysokosci = wysokoscZablokowanychDisplay();
+
+                for (var i = 1; i < bloklist.Count; i++)
+                {
+
+                    switch (ustawienie)
+                    {
+                        case "POZ":
+
+                            if (bloklist[i - 1].zablokowanaSzerokosc)
+                            {
+                                bloklist[i].X = bloklist[i - 1].X + bloklist[i - 1].szerokosc;
+                            }
+                            else
+                            {
+                                bloklist[i - 1].szerokosc = (szerokosc - dlugoscSzerokosci) / liczbaSzerokosci;
+                                bloklist[i].X = bloklist[i - 1].X + (szerokosc - dlugoscSzerokosci) / liczbaSzerokosci;
+                            }
+                            if (!bloklist[i].zablokowanaSzerokosc)
+                            {
+                                bloklist[i].szerokosc = (szerokosc - dlugoscSzerokosci) / liczbaSzerokosci;
+                            }
+                            bloklist[i-1].wysokosc = wysokosc;
+                            bloklist[i].wysokosc = wysokosc;
+                            bloklist[i].Y = bloklist[i - 1].Y;
+                        
+                            break;
+                        case "PION":
+                            if (bloklist[i - 1].zablokowanaWysokosc)
+                            {
+                                bloklist[i].Y = bloklist[i - 1].Y + bloklist[i - 1].wysokosc;
+                            }
+                            else
+                            {
+                                bloklist[i - 1].wysokosc = (wysokosc - dlugoscWysokosci) / liczbaWysokosci;
+                                bloklist[i].Y = bloklist[i - 1].Y + (wysokosc - dlugoscWysokosci) / liczbaWysokosci;
+                            }
+                            if (!bloklist[i].zablokowanaWysokosc)
+                            {
+                                bloklist[i].wysokosc = (wysokosc - dlugoscWysokosci) / liczbaWysokosci;
+                            }
+                            bloklist[i].X = bloklist[i - 1].X;
+                            bloklist[i - 1].szerokosc = szerokosc;
+                            bloklist[i].szerokosc = szerokosc;
+                            break;
+                        default:
+                            break;
+                    }
+                 //   bloklist[i].updateXY();
+
+                }
+                foreach(var blok in bloklist)
+                {
+                    blok.updateXY();
+                }
+            }
+
+        }
+        public void WstawZablokujSzerokoscDown(double _szerokosc)
+        {
+            if (!zablokowanaSzerokosc)
+            {
+                SzerokoscZew = _szerokosc;
+                zablokowanaSzerokosc = true;
+                switch (ustawienie)
+                {
+                    case "PION":
+
+                        // szerokosc = wartoscSzerokosci;
+                        // if (!czyWDownZablokowanoSzerokosc())
+                        // {
+                        //SzerokoscZew = _szerokosc;
+                        //zablokowanaSzerokosc = true;
+                        foreach (Blok blok in bloklist)
+                        {
+                            blok.WstawZablokujSzerokoscDown(_szerokosc);
+                        }
+                        //   }
+
+                        break;
+                    case "POZ":
+
+                        //  SzerokoscZew = wartoscSzerokosci;
+
+                        var roznica = _szerokosc - szerokoscZablokowanych();
+                        var liczba = liczbaSzerokosciNieZablokowanych();
+
+                        if (liczba == 1)
+                        {
+                            zablokowanaSzerokosc = true;
+                            foreach (Blok blok in bloklist)
+                            {
+                                if (!blok.zablokowanaSzerokosc)
+                                {
+                                    blok.WstawZablokujSzerokoscDown(roznica / liczba);
+                                    // blok.zablokowanaSzerokosc = true;
+                                }
+
+                            }
+
+                            //    blok.WstawZablokujSzerokoscDown(_szerokosc);
+                        }
+                        else
+                        {
+                            if (liczba == 0)
+                            {
+
+                            }
+                        }
+
+                        //if (liczba != 0)
+                        //{
+                        //    foreach (Blok blok in bloklist)
+                        //    {
+                        //        if (!blok.zablokowanaSzerokosc)
+                        //        {
+                        //            blok.ZmienSzerokoscDown(roznica / liczba);
+                        //        }
+
+                        //    }
+                        //}
+
+
+                        break;
+                    default:
+
+                        //  SzerokoscZew = wartoscSzerokosci;
+                        // parent.ZmienSzerokosc(wartoscSzerokosci);
+                        break;
+                }
+            }
+
+        }
+        public void WstawZablokujSzerokoscUp(double _szerokosc)
+        {
+            WstawZablokujSzerokoscDown(_szerokosc); // zjechanie z blokada w dół
+            if (parent != null) // gdy nie ma rodzica (blok 1 )
+            {
+                switch (parent.ustawienie) // sprw ustawienia rodzica
+                {
+                    case "PION":
+                        if (!parent.zablokowanaSzerokosc)// gdy mozna zmienic szerokosc
+                        {
+                            parent.WstawZablokujSzerokoscUp(_szerokosc);
+
+                        }
+                        break;
+                    case "POZ":
+                        var roznica = parent.SzerokoscZew - parent.szerokoscZablokowanych();
+                        var liczba = parent.liczbaSzerokosciNieZablokowanych();
+                        if (parent.zablokowanaSzerokosc) //parent jest zablokowany
+                        {
+                            if (liczba == 1) // kiedy zostal jeden element w liscie a parent jest zablokowany
+                            {
+                                foreach (Blok blok in parent.bloklist)
+                                {
+                                    if (!blok.zablokowanaSzerokosc)
+                                    {
+                                        blok.WstawZablokujSzerokoscDown(roznica); // dla tego elementu nalezy zablokowac wysokosc
+                                    }
+                                }
+                            }
+                            else { }
+                        }
+                        else
+                        {
+                            if (liczba == 0)// kiedy parent nie zablokowany to nalezy parenta zablokowac
+                            {
+                                parent.WstawZablokujSzerokoscUp(parent.szerokoscZablokowanych());
+                            }
+                            else
+                            {
+                            }
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+            //WstawZablokujSzerokoscDown(_szerokosc);
+            //if (parent != null)
+            //{
+            //    switch (parent.ustawienie)
+            //    {
+            //        case "PION":
+
+            //            if (!parent.zablokowanaSzerokosc)// gdy mozna zmienic szerokosc
+            //            {
+
+            //                parent.WstawZablokujSzerokoscUp(_szerokosc);
+
+            //            }
+
+
+            //            break;
+            //        case "POZ":
+
+            //            if (!parent.zablokowanaSzerokosc)// gdy mozna zmienic szerokosc
+            //            {
+            //                var roznica = _szerokosc - parent.szerokoscZablokowanych();
+            //                var liczba = parent.liczbaSzerokosciNieZablokowanych();
+
+            //                //   parent.WstawZablokujSzerokoscUp(_szerokosc);
+            //                if (liczba == 1)
+            //                {
+            //                    // zablokowanaSzerokosc = true;
+            //                    foreach (Blok blok in bloklist)
+            //                    {
+            //                        if (!blok.zablokowanaSzerokosc)
+            //                        {
+            //                            parent.WstawZablokujSzerokoscUp(_szerokosc);
+            //                            blok.WstawZablokujSzerokoscDown(roznica / liczba);
+            //                            // parent.WstawZablokujSzerokoscUp(_szerokosc);
+            //                            // blok.zablokowanaSzerokosc = true;
+            //                        }
+
+            //                    }
+
+
+            //                }
+            //                else
+            //                {
+            //                    if (liczba == 0)
+            //                    {
+
+            //                    }
+            //                }
+            //            }
+
+
+            //            break;
+            //        default:
+
+
+            //            break;
+            //    }
+            //}
+
+        }
+        public void WstawZablokujWysokoscUp(double _wysokosc)
+        {
+            WstawZablokujWysokoscDown(_wysokosc); // zjechanie z blokada w dół
+            if (parent != null) // gdy nie ma rodzica (blok 1 )
+            {
+                switch (parent.ustawienie) // sprw ustawienia rodzica
+                {
+                    case "PION":
+                        var roznica = parent.WysokoscZew - parent.wysokoscZablokowanych();
+                        var liczba = parent.liczbaWysokosciNieZablokowanych();
+                        if (parent.zablokowanaWysokosc) //parent jest zablokowany
+                        {
+                            if (liczba == 1) // kiedy zostal jeden element w liscie a parent jest zablokowany
+                            {
+                                foreach (Blok blok in parent.bloklist)
+                                {
+                                    if (!blok.zablokowanaWysokosc)
+                                    {
+                                        blok.WstawZablokujWysokoscDown(roznica); // dla tego elementu nalezy zablokowac wysokosc
+                                    }
+                                }
+                            }
+                            else { }
+                        }
+                        else
+                        {
+                            if (liczba == 0)// kiedy parent nie zablokowany to nalezy parenta zablokowac
+                            {
+                                parent.WstawZablokujWysokoscUp(parent.wysokoscZablokowanych());
+                            }
+                            else
+                            {
+                            }
+                        }
+
+                        break;
+                    case "POZ":
+                        if (!parent.zablokowanaWysokosc)// gdy mozna zmienic szerokosc
+                        {
+                            parent.WstawZablokujWysokoscUp(_wysokosc);
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        public void WstawZablokujWysokoscDown(double _wysokosc)
+        {
+            WysokoscZew = _wysokosc;
+            zablokowanaWysokosc = true;
+            switch (ustawienie)
+            {
+                case "PION":
+                    //  SzerokoscZew = wartoscSzerokosci;
+
+                    var roznica = _wysokosc - wysokoscZablokowanych();
+                    var liczba = liczbaWysokosciNieZablokowanych();
+
+                    if (liczba == 1)
+                    {
+                        zablokowanaWysokosc = true;
+                        foreach (Blok blok in bloklist)
+                        {
+                            if (!blok.zablokowanaWysokosc)
+                            {
+                                blok.WstawZablokujWysokoscDown(roznica / liczba);
+                                // blok.zablokowanaSzerokosc = true;
+                            }
+
+                        }
+
+                        //    blok.WstawZablokujSzerokoscDown(_szerokosc);
+                    }
+                    else
+                    {
+                        if (liczba == 0)
+                        {
+
+                        }
+                    }
+
+
+
+                    break;
+                case "POZ":
+                    // szerokosc = wartoscSzerokosci;
+                    // if (!czyWDownZablokowanoSzerokosc())
+                    // {
+                    //SzerokoscZew = _szerokosc;
+                    //zablokowanaSzerokosc = true;
+                    foreach (Blok blok in bloklist)
+                    {
+                        blok.WstawZablokujWysokoscDown(_wysokosc);
+                    }
+                    //   }
+                    //  SzerokoscZew = wartoscSzerokosci;
+
+
+
+
+                    break;
+                default:
+
+                    //  SzerokoscZew = wartoscSzerokosci;
+                    // parent.ZmienSzerokosc(wartoscSzerokosci);
+                    break;
+            }
+        }
         public double SzerokoscZew
         {
             get
@@ -50,7 +412,7 @@
                     if (!zablokowanaSzerokosc)
                     {
                         szerokosc = value * 100.0 / zakladka.szerokosc;
-                        zablokowanaSzerokosc = true;
+                        //  zablokowanaSzerokosc = true;
                     }
                     else
                     {
@@ -87,7 +449,7 @@
                     if (!zablokowanaWysokosc)
                     {
                         wysokosc = value * 100.0 / zakladka.wysokosc;
-                        zablokowanaWysokosc = true;
+                        //  zablokowanaWysokosc = true;
                     }
                     else
                     {
@@ -223,7 +585,8 @@
             WskaznikUstawieniaWymiaruPrzezUzytkownika = true;
             if (!zablokowanaSzerokosc)
             {
-                parent.ZmienSzerokoscDown(wartoscSzerokosci);
+                WstawZablokujSzerokoscUp(wartoscSzerokosci);
+                //   parent.ZmienSzerokoscDown(wartoscSzerokosci);
             }
 
         }
@@ -232,7 +595,9 @@
             WskaznikUstawieniaWymiaruPrzezUzytkownika = true;
             if (!zablokowanaWysokosc)
             {
-                parent.ZmienWysokoscDown(wartoscWysokosci);
+
+                WstawZablokujWysokoscUp(wartoscWysokosci);
+                // parent.ZmienWysokoscDown(wartoscWysokosci);
             }
 
         }
@@ -290,7 +655,7 @@
                     //  SzerokoscZew = wartoscSzerokosci;
 
                     var roznica = wartoscSzerokosci - szerokoscZablokowanych();
-                    var liczba = liczbaSzerokosciZablokowanych();
+                    var liczba = liczbaSzerokosciNieZablokowanych();
                     if (liczba != 0)
                     {
                         foreach (Blok blok in bloklist)
@@ -327,7 +692,19 @@
             }
             return suma;
         }
-        private double liczbaSzerokosciZablokowanych()
+        private double szerokoscZablokowanychDisplay()
+        {
+            var suma = 0.0;
+            foreach (var blok in bloklist)
+            {
+                if (blok.zablokowanaSzerokosc)
+                {
+                    suma = suma + blok.szerokosc;
+                }
+            }
+            return suma;
+        }
+        private double liczbaSzerokosciNieZablokowanych()
         {
             var suma = 0;
             foreach (var blok in bloklist)
@@ -351,7 +728,19 @@
             }
             return suma;
         }
-        private double liczbaWysokosciZablokowanych()
+        private double wysokoscZablokowanychDisplay()
+        {
+            var suma = 0.0;
+            foreach (var blok in bloklist)
+            {
+                if (blok.zablokowanaWysokosc)
+                {
+                    suma = suma + blok.wysokosc;
+                }
+            }
+            return suma;
+        }
+        private double liczbaWysokosciNieZablokowanych()
         {
             var suma = 0;
             foreach (var blok in bloklist)
@@ -396,19 +785,19 @@
             switch (ustawienie)
             {
                 case "PION":
-                    var roznica = wartoscWysokosci - wysokoscZablokowanych();
-                    var liczba = liczbaWysokosciZablokowanych();
-                    if (liczba != 0)
-                    {
-                        foreach (Blok blok in bloklist)
-                        {
-                            if (!blok.zablokowanaSzerokosc)
-                            {
-                                blok.ZmienWysokoscDown(roznica / liczba);
-                            }
+                    //var roznica = wartoscWysokosci - wysokoscZablokowanych();
+                    //var liczba = liczbaWysokosciZablokowanych();
+                    //if (liczba != 0)
+                    //{
+                    //    foreach (Blok blok in bloklist)
+                    //    {
+                    //        if (!blok.zablokowanaSzerokosc)
+                    //        {
+                    //            blok.ZmienWysokoscDown(roznica / liczba);
+                    //        }
 
-                        }
-                    }
+                    //    }
+                    //}
                     break;
                 case "POZ":
                     WysokoscZew = wartoscWysokosci;
