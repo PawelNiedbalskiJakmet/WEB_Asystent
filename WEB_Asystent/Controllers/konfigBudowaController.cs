@@ -65,7 +65,7 @@ namespace WEB_Asystent.Controllers
                     // zakladka.Blok.SzerokoscZew = zakladka.szerokosc;
                     zakladka.Blok.WstawZablokujSzerokoscDown(zakladka.szerokosc, zakladka.Blok);
 
-
+                    var o = 0;
                 }
                 if (zakladka.wysokosc > 0) // kiedy cos ustawiono wtedy mozemy zablokowac wysokosc
                 {
